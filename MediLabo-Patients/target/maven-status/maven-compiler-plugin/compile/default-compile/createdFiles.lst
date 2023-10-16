@@ -1,0 +1,8 @@
+com\openclassrooms\PatientsApp.class
+com\openclassrooms\dto\PatientDTO.class
+com\openclassrooms\service\PatientService.class
+com\openclassrooms\model\Patient.class
+com\openclassrooms\dao\PatientRepository.class
+com\openclassrooms\service\PatientServiceImpl.class
+com\openclassrooms\controller\PatientController.class
+com\openclassrooms\dto\converter\PatientDTOConverter.class

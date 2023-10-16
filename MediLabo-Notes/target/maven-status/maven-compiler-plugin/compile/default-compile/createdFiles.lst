@@ -1,0 +1,8 @@
+com\openclassrooms\controller\NoteController.class
+com\openclassrooms\dto\NoteDTO.class
+com\openclassrooms\NotesApp.class
+com\openclassrooms\service\NoteService.class
+com\openclassrooms\service\NoteServiceImpl.class
+com\openclassrooms\dao\NoteRepository.class
+com\openclassrooms\dto\converter\NoteDTOConverter.class
+com\openclassrooms\model\Note.class
