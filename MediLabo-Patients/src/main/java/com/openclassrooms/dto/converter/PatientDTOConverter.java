@@ -6,13 +6,15 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PatientDTOConverter {
     public Patient getEntityFromDTO(PatientDTO dto) {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
-            entity.setId(dto.getId());
+            entity.setId(UUID.fromString(dto.getId()));
+
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
             entity.setBirthdate(dto.getBirthdate());
@@ -28,7 +30,8 @@ public class PatientDTOConverter {
         PatientDTO dto = null;
         if (entity != null) {
             dto = new PatientDTO();
-            dto.setId(entity.getId());
+            dto.setId(String.valueOf(entity.getId()));
+
             dto.setFirstName(entity.getFirstName());
             dto.setLastName(entity.getLastName());
             dto.setBirthdate(entity.getBirthdate());

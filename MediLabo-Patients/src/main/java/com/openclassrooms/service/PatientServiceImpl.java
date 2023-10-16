@@ -33,8 +33,8 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDTO findById(UUID id) {
-        Optional<Patient> patient = patientRepository.findById(id);
+    public PatientDTO findById(String id) {
+        Optional<Patient> patient = patientRepository.findById(UUID.fromString(id));
 
         if (patient.isPresent()) {
             return patientDTOConverter.getDTOFromEntity(patient.get());
