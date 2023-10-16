@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/MediLabo.iml" filepath="$PROJECT_DIR$/.idea/MediLabo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MediLabo-Gateway/MediLabo-Gateway.iml" filepath="$PROJECT_DIR$/MediLabo-Gateway/MediLabo-Gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MediLabo-Notes/MediLabo-Notes.iml" filepath="$PROJECT_DIR$/MediLabo-Notes/MediLabo-Notes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MediLabo-Patients/MediLabo-Patients.iml" filepath="$PROJECT_DIR$/MediLabo-Patients/MediLabo-Patients.iml" />
+    </modules>
+  </component>
+</project>
