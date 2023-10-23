@@ -3,9 +3,7 @@ package com.openclassrooms.dto;
 import lombok.Data;
 
 @Data
-public class NoteDTO {
+public class NoteLightDTO {
     private String id;
-    private String patId;
-    private String patient;
     private String note;
 }
