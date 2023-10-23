@@ -9,8 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.List;
 
 @SpringBootApplication
 public class PatientsApp implements CommandLineRunner {
@@ -27,11 +26,14 @@ public class PatientsApp implements CommandLineRunner {
     public void  run(String... args) throws Exception {
         logger.info("Starting Patients Service");
 
-        Optional<Patient> patient = patientRepository.findById(UUID.fromString("85c4901e-5ee7-43d9-a126-8a45835ad91f"));
+        List<Patient> allpatients = patientRepository.findAll();
+        logger.info(allpatients.toString());
+
+        /*Optional<Patient> patient = patientRepository.findById(UUID.fromString("85c4901e-5ee7-43d9-a126-8a45835ad91f"));
         if (patient.isPresent()) {
             logger.info(patient.get().getFirstName() + " " + patient.get().getLastName());
         } else {
             logger.info("Patient not found");
-        }
+        }*/
     }
 }

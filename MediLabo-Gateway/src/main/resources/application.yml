@@ -18,6 +18,12 @@ spring:
             - Path=/patients-service/**
           filters:
             - SetPath=/patients/
+        - id: notes_route
+          uri: http://localhost:9002
+          predicates:
+            - Path=/notes-service/**
+          filters:
+            - SetPath=/notes/
         - id: angular_route
           uri: http://localhost:4200/
           predicates:

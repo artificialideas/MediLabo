@@ -44,12 +44,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO findByFirstNameAndLastName(String firstName, String lastName) {
-        Optional<Patient> patient = patientRepository.findByFirstNameAndLastName(firstName, lastName);
-
-        if (patient.isPresent()) {
+        Patient patient = patientRepository.findByFirstNameAndLastName(firstName, lastName);
+return null;
+        /*if (patient.isPresent()) {
             return patientDTOConverter.getDTOFromEntity(patient.get());
         } else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with full name " + firstName + " " + lastName + " doesn't exists.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with full name " + firstName + " " + lastName + " doesn't exists.");*/
     }
 
     @Override
