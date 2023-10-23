@@ -43,7 +43,7 @@ public class NoteController {
             @PathVariable("id") String id,
             @RequestBody NoteDTO noteToUpdateDTO) {
         NoteDTO noteDTO = noteService.findById(id);
-        if (noteService != null)
+        if (noteDTO != null)
             noteService.update(noteToUpdateDTO);
 
         return "redirect:/notes/{id}";
