@@ -5,14 +5,15 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Assessments")
 @Getter
 @Setter
+@Entity
+@Table(name = "Assessments")
 public class Assessment {
     public enum Risk {
         NONE,
@@ -21,17 +22,15 @@ public class Assessment {
         EARLY_ONSET
     }
 
-    @OneToOne
-    @JoinColumn(name = "id_patient",
-            nullable = false,
-            unique = true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_assessment")
+    private long id;
+
+    @Column(name = "id_patient")
     private String patId;
 
     @Column(name = "patient_status",
             nullable = false)
     private Risk status;
-
-    /**
-     *  Helper methods
-     **/
 }

@@ -1,1 +1,7 @@
+com\openclassrooms\dao\AssessmentRepository.class
+com\openclassrooms\service\AssessmentServiceImpl.class
+com\openclassrooms\model\Assessment$Risk.class
 com\openclassrooms\AssessmentsApp.class
+com\openclassrooms\controller\AssessmentController.class
+com\openclassrooms\model\Assessment.class
+com\openclassrooms\service\AssessmentService.class

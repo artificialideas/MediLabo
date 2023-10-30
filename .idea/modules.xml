@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MediLabo-Assessments/MediLabo-Assessments.iml" filepath="$PROJECT_DIR$/MediLabo-Assessments/MediLabo-Assessments.iml" />
       <module fileurl="file://$PROJECT_DIR$/MediLabo-Frontend/MediLabo-Frontend.iml" filepath="$PROJECT_DIR$/MediLabo-Frontend/MediLabo-Frontend.iml" />
     </modules>
   </component>

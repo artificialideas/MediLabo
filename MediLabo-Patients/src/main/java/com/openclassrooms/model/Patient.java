@@ -2,10 +2,11 @@ package com.openclassrooms.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
@@ -17,7 +18,9 @@ import java.util.UUID;
 @Table(name = "Patients")
 public class Patient {
     @Id
-    @UuidGenerator
+    @GeneratedValue(generator = "uuid-hibernate-generator")
+    @GenericGenerator(name = "uuid-hibernate-generator",
+            strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id_patient")
     private UUID id;
 
