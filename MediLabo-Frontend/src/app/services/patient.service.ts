@@ -7,14 +7,14 @@ import { Patient } from '../models/patient.model';
   providedIn: 'root'
 })
 export class PatientService {
-  public gatewayUrl: string = "http://localhost:9000";
+  public gatewayUrl: string = "http://localhost:9001";
 
   constructor(
     private http: HttpClient
   ) {}
 
   public findAll(): Observable<HttpResponse<Patient[]>> {
-    return this.http.get<Patient[]>(`${this.gatewayUrl}/patients-service/`, { observe: 'response'});
+    return this.http.get<Patient[]>(`${this.gatewayUrl}/patients/`, { observe: 'response'});
   }
 
   public find(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
@@ -26,10 +26,10 @@ export class PatientService {
   }
 
   public update(firstName: string, lastName: string, patient: Patient): Observable<HttpResponse<Patient>> {
-    return this.http.put<Patient>(`${this.gatewayUrl}/patients-service/${firstName}-${lastName}`, patient, { observe: 'response' });
+    return this.http.put<Patient>(`${this.gatewayUrl}/patients/${firstName}-${lastName}`, patient, { observe: 'response' });
   }
 
   public delete(firstName: string, lastName: string): Observable<HttpResponse<Patient[]>> {
-    return this.http.delete<Patient[]>(`${this.gatewayUrl}/patients-service/${firstName}-${lastName}`, { observe: 'response' });
+    return this.http.delete<Patient[]>(`${this.gatewayUrl}/patients/${firstName}-${lastName}`, { observe: 'response' });
   }
 }

@@ -16,10 +16,10 @@ export class PatientComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.patientService.findAll().subscribe(({body}) => {
-            console.log("body",body)
-            if (body)
-                this.patients = body;
+        this.patientService.findAll().subscribe((res) => {
+            console.log("body",res)
+            /*if (res)
+                this.patients = res;*/
         });
     }
 }
