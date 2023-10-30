@@ -8,12 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.UUID;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "Assessments")
+@Getter
+@Setter
 public class Assessment {
     public enum Risk {
         NONE,
@@ -26,7 +25,7 @@ public class Assessment {
     @JoinColumn(name = "id_patient",
             nullable = false,
             unique = true)
-    private UUID patId;
+    private String patId;
 
     @Column(name = "patient_status",
             nullable = false)

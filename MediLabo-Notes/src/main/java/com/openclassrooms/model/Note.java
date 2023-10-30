@@ -20,5 +20,5 @@ public class Note {
     private String patient;
 
     private String note;
-    private Date date;
+    private Date date = new Date();
 }
