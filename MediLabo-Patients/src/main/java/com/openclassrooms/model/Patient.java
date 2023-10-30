@@ -35,7 +35,7 @@ public class Patient {
     private String gender;
 
     @Column(name = "phone_number", nullable = false)
-    private int phoneNumber;
+    private String phoneNumber;
     @Column(name = "address", nullable = false)
     private String address;
 }

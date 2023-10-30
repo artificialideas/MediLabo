@@ -24,6 +24,12 @@ spring:
             - Path=/notes-service/**
           filters:
             - SetPath=/notes/
+        - id: assessments_route
+          uri: http://localhost:9003
+          predicates:
+            - Path=/assessments-service/**
+          filters:
+            - SetPath=/assessments/
         - id: angular_route
           uri: http://localhost:4200/
           predicates:

@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,12 +23,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDTO> findAll() {
-        List<Patient> allPatients = new ArrayList<>();
-        patientRepository.findAll()
-                .iterator()
-                .forEachRemaining(allPatients::add);
-
-        return patientDTOConverter.getDTOsFromEntities(allPatients);
+        return patientDTOConverter.getDTOsFromEntities(patientRepository.findAll());
     }
 
     @Override
