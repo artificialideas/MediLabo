@@ -21,17 +21,12 @@
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 	</properties>
 
-	<modules>
-		<module>../MediLabo-Assessments</module>
-		<module>../MediLabo-Notes</module>
-		<module>../MediLabo-Patients</module>
-	</modules>
-
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

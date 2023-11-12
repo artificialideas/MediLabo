@@ -3,21 +3,16 @@ server:
 
 spring:
   application:
-    name: "MediLabo-Gateway"
+    name: "gateway-service"
   cloud:
     gateway:
-      globalcors:
-        '[/**]':
-          allowedOrigins: "*"
-          allowedMethods: "*"
-          allowedHeaders: "*"
       routes:
-        - id: patients_route
+        - id: patients-service
           uri: http://localhost:9001
           predicates:
-            - Path=/patients-service/**
-          filters:
-            - SetPath=/patients/
+            - Path=/patients/**
+#          filters:
+#            - SetPath=/patients/        # Same as controller @RequestMapping
         - id: notes_route
           uri: http://localhost:9002
           predicates:
