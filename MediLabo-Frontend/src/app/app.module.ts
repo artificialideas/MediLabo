@@ -12,12 +12,14 @@ import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { PatientDetailComponent } from './components/patient/patient-detail/patient-detail.component';
+import { PatientFormComponent } from './components/patient/patient-form/patient-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
-    PatientDetailComponent
+    PatientDetailComponent,
+    PatientFormComponent
   ],
   imports: [
     BrowserModule,

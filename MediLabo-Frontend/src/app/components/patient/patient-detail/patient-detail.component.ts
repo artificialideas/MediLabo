@@ -10,7 +10,7 @@ import { PatientService } from 'src/app/services/patient.service';
     styleUrls: ['./patient-detail.component.scss']
 })
 export class PatientDetailComponent implements OnInit {
-    public patients: Patient[] = [];
+    //public patient: Patient;
 
     constructor(
         private patientService: PatientService,

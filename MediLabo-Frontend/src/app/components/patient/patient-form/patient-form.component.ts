@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
+import { PatientComponent } from '../patient.component';
 
 @Component({
     selector: 'app-patient-form',
@@ -13,7 +15,11 @@ export class PatientFormComponent implements OnInit {
 
     constructor(
         private patientService: PatientService,
+        public dialogRef: MatDialogRef<PatientComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: Patient,
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        console.log("received data from PatientComponent", this.data)
+    }
 }
