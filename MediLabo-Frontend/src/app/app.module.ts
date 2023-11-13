@@ -7,13 +7,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 
+import { MaterialModule } from './material.module';
+
 import { AppComponent } from './app.component';
 import { PatientComponent } from './components/patient/patient.component';
+import { PatientDetailComponent } from './components/patient/patient-detail/patient-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatientComponent
+    PatientComponent,
+    PatientDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +25,8 @@ import { PatientComponent } from './components/patient/patient.component';
     HttpClientModule,
     CommonModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,12 @@
 <ul *ngIf="patients.length > 0">
     <li *ngFor="let patient of patients">
-        {{ patient.firstName }} {{ patient.lastName }}
+        <a [routerLink]="['/patients', patient.firstName + '-' + patient.lastName]">
+            {{ patient.firstName }} {{ patient.lastName }}
+        </a>
     </li>
 </ul>
+
+<button mat-button
+        click="openForm()">
+    Add new patient
+</button>
