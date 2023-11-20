@@ -1,12 +1,23 @@
-<ul *ngIf="patients.length > 0">
-    <li *ngFor="let patient of patients">
-        <a [routerLink]="['/patients', patient.firstName + '-' + patient.lastName]">
-            {{ patient.firstName }} {{ patient.lastName }}
-        </a>
-    </li>
-</ul>
+<h1>All patients</h1>
 
-<button mat-button
+<table class="table table-striped" *ngIf="patients.length > 0">
+    <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">RISK</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patients" [routerLink]="['/patients', patient.firstName + '-' + patient.lastName]">
+        <td>{{ patient.firstName }}</td>
+        <td>{{ patient.lastName }}</td>
+        <td>RISK</td>
+      </tr>
+    </tbody>
+</table>
+<button mat-raised-button
+        color="primary"
         click="openForm()">
     Add new patient
 </button>

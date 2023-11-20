@@ -1,1 +1,57 @@
-patient detail
+<h1>Patient card</h1>
+
+<mat-card class="mt-4">
+    <mat-card-header>
+        <mat-card-title>{{ patient.firstName }} {{ patient.lastName }}</mat-card-title>
+        <mat-card-subtitle>Risk status: RISK</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <h2>Details:</h2>
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="mb-0">Birthdate</p>
+            </div>
+            <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ patient.birthdate }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="mb-0">Gender</p>
+            </div>
+            <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ patient.gender }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="mb-0">Phone number</p>
+            </div>
+            <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ patient.phoneNumber }}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <p class="mb-0">Address</p>
+            </div>
+            <div class="col-sm-9">
+                <p class="text-muted mb-0">{{ patient.address }}</p>
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-footer>
+        <h2>Notes:</h2>
+        <mat-list>
+            <mat-list-item>
+                <p class="small mb-0">
+                    <strong>Created date:</strong> DATE
+                </p>
+                <p>Note text</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-card-footer>
+</mat-card>

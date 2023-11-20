@@ -10,7 +10,7 @@ import { PatientService } from 'src/app/services/patient.service';
     styleUrls: ['./patient-detail.component.scss']
 })
 export class PatientDetailComponent implements OnInit {
-    //public patient: Patient;
+    public patient: Patient | any;
 
     constructor(
         private patientService: PatientService,
@@ -20,8 +20,8 @@ export class PatientDetailComponent implements OnInit {
     ngOnInit(): void {
         const firstname = this.route.snapshot.params['firstname'];
         const lastname = this.route.snapshot.params['lastname'];
-        this.patientService.find(firstname, lastname). subscribe((res) => {
-            console.log("details res",res)
+        this.patientService.find(firstname, lastname). subscribe((patient) => {
+            this.patient = patient;
         });
     }
 }
