@@ -17,7 +17,7 @@ export class PatientService {
     return this.http.get<Patient[]>(`${this.gatewayUrl}/`, { observe: 'response'});
   }
 
-  public find(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
+  public findPatient(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
     return this.http.get<Patient>(`${this.gatewayUrl}/${firstName}-${lastName}`, { observe: 'response'});
   }
 

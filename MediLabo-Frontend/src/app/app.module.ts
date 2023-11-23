@@ -30,6 +30,9 @@ import { PatientFormComponent } from './components/patient/patient-form/patient-
     NgbModule,
     MaterialModule
   ],
+  exports: [
+    PatientDetailComponent,
+    PatientFormComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

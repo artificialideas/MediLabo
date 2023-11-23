@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +25,10 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<PatientDTO> findAll() {
-        return patientDTOConverter.getDTOsFromEntities(patientRepository.findAll());
+        List<Patient> allPatients = new ArrayList<>();
+        patientRepository.findAll().forEach(allPatients::add);
+
+        return patientDTOConverter.getDTOsFromEntities(allPatients);
     }
 
     @Override
@@ -38,12 +43,12 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDTO findByFirstNameAndLastName(String firstName, String lastName) {
-        Patient patient = patientRepository.findByFirstNameAndLastName(firstName, lastName);
-return null;
-        /*if (patient.isPresent()) {
+        Optional<Patient> patient = patientRepository.findByFirstNameAndLastName(firstName, lastName);
+
+        if (patient.isPresent()) {
             return patientDTOConverter.getDTOFromEntity(patient.get());
         } else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with full name " + firstName + " " + lastName + " doesn't exists.");*/
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with full name " + firstName + " " + lastName + " doesn't exists.");
     }
 
     @Override
@@ -73,7 +78,7 @@ return null;
         if (patientDTO.getGender() != null)
             patientToSaveDTO.setGender(patientDTO.getGender());
 
-        if (patientDTO.getPhoneNumber() != patientToSaveDTO.getPhoneNumber())
+        if (!Objects.equals(patientDTO.getPhoneNumber(), patientToSaveDTO.getPhoneNumber()))
             patientToSaveDTO.setPhoneNumber(patientDTO.getPhoneNumber());
         if (patientDTO.getAddress() != null)
             patientToSaveDTO.setAddress(patientDTO.getAddress());
