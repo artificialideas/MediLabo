@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http'; 
+import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from './app-routing.module';
+import { routes } from './app-routing.module';
 
 import { MaterialModule } from './material.module';
 
@@ -23,8 +24,8 @@ import { PatientFormComponent } from './components/patient/patient-form/patient-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
+    RouterModule.forRoot(routes),
     CommonModule,
     ReactiveFormsModule,
     NgbModule,

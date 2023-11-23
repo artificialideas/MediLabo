@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let patient of patients" [routerLink]="['/patients', patient.firstName + '-' + patient.lastName]">
+      <tr *ngFor="let patient of patients" [routerLink]="['/patient', patient.firstName + '-' + patient.lastName]">
         <td>{{ patient.firstName }}</td>
         <td>{{ patient.lastName }}</td>
         <td>RISK</td>
