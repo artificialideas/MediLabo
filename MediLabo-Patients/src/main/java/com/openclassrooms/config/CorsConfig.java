@@ -1,4 +1,3 @@
-/*
 package com.openclassrooms.config;
 
 import org.springframework.context.annotation.Bean;
@@ -16,9 +15,8 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedHeaders("*")
                         .allowedMethods("*")
-                        .allowedOrigins("http://localhost:4200");
+                        .allowedOrigins("*");
             }
         };
     }
 }
-*/

@@ -7,7 +7,7 @@ import { Patient } from '../models/patient.model';
   providedIn: 'root'
 })
 export class PatientService {
-  public gatewayUrl: string = "http://localhost:9000/patients";
+  public gatewayUrl: string = "http://localhost:9001/patients";
 
   constructor(
     private http: HttpClient
@@ -18,6 +18,7 @@ export class PatientService {
   }
 
   public findPatient(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
+    console.log(firstName, lastName)
     return this.http.get<Patient>(`${this.gatewayUrl}/${firstName}-${lastName}`, { observe: 'response'});
   }
 
