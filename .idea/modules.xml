@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MediLabo-Frontend/MediLabo-Frontend.iml" filepath="$PROJECT_DIR$/MediLabo-Frontend/MediLabo-Frontend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MediLabo-Gateway/MediLabo-Gateway.iml" filepath="$PROJECT_DIR$/MediLabo-Gateway/MediLabo-Gateway.iml" />
     </modules>
   </component>
 </project>

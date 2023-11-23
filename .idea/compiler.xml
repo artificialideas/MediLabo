@@ -12,6 +12,9 @@
         <module name="MediLabo-Assessments" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="MediLabo-Gateway" target="15" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
