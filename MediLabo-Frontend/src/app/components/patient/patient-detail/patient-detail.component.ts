@@ -15,16 +15,16 @@ export class PatientDetailComponent implements OnInit {
     constructor(
         private patientService: PatientService,
         private route: ActivatedRoute
-    ) {}
+    ) {console.log("hi!!!")}
 
     ngOnInit(): void {
         console.log("hi")
-        const firstname = this.route.snapshot.params['firstname'];
+        /* const firstname = this.route.snapshot.params['firstname'];
         const lastname = this.route.snapshot.params['lastname'];
         
         this.patientService.findPatient(firstname, lastname).subscribe((patient) => {
             console.log(patient)
             this.patient = patient;
-        });
+        }); */
     }
 }

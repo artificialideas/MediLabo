@@ -7,13 +7,11 @@ import java.util.List;
 public interface PatientService {
     List<PatientDTO> findAll();
 
-    PatientDTO findById(String id);
-
     PatientDTO findByFirstNameAndLastName(String firstName, String lastName);
 
     void add(PatientDTO patientDTO);
 
-    void update(PatientDTO patientDTO);
+    void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO);
 
     void delete(PatientDTO patientDTO);
 }

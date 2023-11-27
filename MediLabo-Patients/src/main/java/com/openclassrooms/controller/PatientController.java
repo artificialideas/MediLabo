@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("/patients-service")
 public class PatientController {
     @Autowired
     private PatientService patientService;
@@ -43,10 +43,10 @@ public class PatientController {
     public String updatePatient(
             @PathVariable("firstName") String firstName,
             @PathVariable("lastName") String lastName,
-            @RequestBody PatientDTO patientToUpdateDTO) {
+            @RequestBody PatientDTO updateDataDTO) {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
-            patientService.update(patientToUpdateDTO);
+            patientService.update(patientDTO, updateDataDTO);
 
         return "redirect:/patients/{firstName}-{lastName}";
     }

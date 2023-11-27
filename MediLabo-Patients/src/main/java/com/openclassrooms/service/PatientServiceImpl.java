@@ -11,7 +11,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    private PatientDTOConverter patientDTOConverter = new PatientDTOConverter();
+    private final PatientDTOConverter patientDTOConverter = new PatientDTOConverter();
     public void PatientDTOConverter(PatientDTOConverter patientDTOConverter) {}
 
     @Override
@@ -29,16 +28,6 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.findAll().forEach(allPatients::add);
 
         return patientDTOConverter.getDTOsFromEntities(allPatients);
-    }
-
-    @Override
-    public PatientDTO findById(String id) {
-        Optional<Patient> patient = patientRepository.findById(UUID.fromString(id));
-
-        if (patient.isPresent()) {
-            return patientDTOConverter.getDTOFromEntity(patient.get());
-        } else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with id " + id + " doesn't exists.");
     }
 
     @Override
@@ -54,40 +43,39 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void add(PatientDTO patientDTO) {
         // Check if the entered patient already exists
-        if (findById(patientDTO.getId()) != null) {
+        if (findById(patientDTO.getId()).isEmpty()) {
             patientRepository.save(patientDTOConverter.getEntityFromDTO(patientDTO));
         } else
             throw new ResponseStatusException(HttpStatus.IM_USED, patientDTO.getFirstName() + " " + patientDTO.getLastName() + " already exists.");
     }
 
     @Override
-    public void update(PatientDTO patientDTO) {
-        PatientDTO patientToSaveDTO = new PatientDTO();
+    public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) {
+        // Entity validation has been done in controller with findByFirstNameAndLastName()
+        if (updateDataDTO.getFirstName() != null)
+            savedPatientDTO.setFirstName(updateDataDTO.getFirstName());
+        if (updateDataDTO.getLastName() != null)
+            savedPatientDTO.setLastName(updateDataDTO.getLastName());
 
-        PatientDTO savedPatientDTO = findById(patientDTO.getId());
-        if (savedPatientDTO != null)
-            patientToSaveDTO = savedPatientDTO;
+        if (updateDataDTO.getBirthdate() != null)
+            savedPatientDTO.setBirthdate(updateDataDTO.getBirthdate());
+        if (updateDataDTO.getGender() != null)
+            savedPatientDTO.setGender(updateDataDTO.getGender());
 
-        if (patientDTO.getFirstName() != null)
-            patientToSaveDTO.setFirstName(patientDTO.getFirstName());
-        if (patientDTO.getLastName() != null)
-            patientToSaveDTO.setLastName(patientDTO.getLastName());
+        if (updateDataDTO.getPhoneNumber() != null)
+            savedPatientDTO.setPhoneNumber(updateDataDTO.getPhoneNumber());
+        if (updateDataDTO.getAddress() != null)
+            savedPatientDTO.setAddress(updateDataDTO.getAddress());
 
-        if (patientDTO.getBirthdate() != null)
-            patientToSaveDTO.setBirthdate(patientDTO.getBirthdate());
-        if (patientDTO.getGender() != null)
-            patientToSaveDTO.setGender(patientDTO.getGender());
-
-        if (!Objects.equals(patientDTO.getPhoneNumber(), patientToSaveDTO.getPhoneNumber()))
-            patientToSaveDTO.setPhoneNumber(patientDTO.getPhoneNumber());
-        if (patientDTO.getAddress() != null)
-            patientToSaveDTO.setAddress(patientDTO.getAddress());
-
-        patientRepository.save(patientDTOConverter.getEntityFromDTO(patientToSaveDTO));
+        patientRepository.save(patientDTOConverter.getEntityFromDTO(savedPatientDTO));
     }
 
     @Override
     public void delete(PatientDTO patientDTO) {
         patientRepository.delete(patientDTOConverter.getEntityFromDTO(patientDTO));
+    }
+
+    public Optional<Patient> findById(String id) {
+        return patientRepository.findById(UUID.fromString(id));
     }
 }
