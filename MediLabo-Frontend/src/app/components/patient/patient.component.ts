@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
 import { PatientFormComponent } from './patient-form/patient-form.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-patient',
@@ -14,6 +15,8 @@ export class PatientComponent implements OnInit {
     public patients: Patient[] = [];
 
     constructor(
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
         private patientService: PatientService,
         public dialog: MatDialog,
     ) {}
@@ -25,6 +28,18 @@ export class PatientComponent implements OnInit {
                 this.patients = tmp;
             }
         });
+    }
+
+    goTo(firstname: string, lastname: string) {
+        this.router.navigate(
+            ['/patient'],
+            {queryParams: { 
+                firstname: firstname,
+                lastname: lastname
+            },
+                //relativeTo: this.activatedRoute
+            }
+        );
     }
 
     public openForm() {
