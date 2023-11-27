@@ -18,13 +18,12 @@ export class PatientDetailComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        console.log("hi")
         const firstname = this.route.snapshot.params['firstname'];
         const lastname = this.route.snapshot.params['lastname'];
         
-        this.patientService.findPatient(firstname, lastname).subscribe((patient) => {
-            console.log(patient)
-            this.patient = patient;
+        this.patientService.findPatient(firstname, lastname).subscribe((res) => {
+            console.log("res",res)
+            this.patient = res.body;
         });
     }
 }

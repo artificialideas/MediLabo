@@ -16,7 +16,7 @@ const routes: Routes = [
     title: 'Patients list'
   },
   {
-    path: 'patient',
+    path: 'detail',
     component: PatientDetailComponent,
     title: 'Patient details'
   },

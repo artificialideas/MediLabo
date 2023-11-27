@@ -31,14 +31,12 @@ export class PatientComponent implements OnInit {
     }
 
     goTo(firstname: string, lastname: string) {
+        const fullname = firstname + "-" + lastname;
         this.router.navigate(
-            ['/patient'],
-            {queryParams: { 
+            ['/detail', {
                 firstname: firstname,
                 lastname: lastname
-            },
-                //relativeTo: this.activatedRoute
-            }
+            }]
         );
     }
 

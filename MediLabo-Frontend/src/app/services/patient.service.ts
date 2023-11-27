@@ -18,7 +18,7 @@ export class PatientService {
   }
 
   public findPatient(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
-    console.log(firstName, lastName)
+    console.log(`${this.gatewayUrl}/${firstName}-${lastName}`)
     return this.http.get<Patient>(`${this.gatewayUrl}/${firstName}-${lastName}`, { observe: 'response'});
   }
 
