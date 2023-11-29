@@ -1,4 +1,4 @@
-<h1>All patients</h1>
+<h2>All patients</h2>
 
 <table class="table table-striped" *ngIf="patients.length > 0">
     <thead>
@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let patient of patients" (click)="goTo(patient.firstName, patient.lastName)">
+      <tr *ngFor="let patient of patients" (click)="goToDetail(patient.firstName, patient.lastName)">
         <td>{{ patient.firstName }}</td>
         <td>{{ patient.lastName }}</td>
         <td>RISK</td>
@@ -18,6 +18,6 @@
 </table>
 <button mat-raised-button
         color="primary"
-        click="openForm()">
+        click="goToForm()">
     Add new patient
 </button>

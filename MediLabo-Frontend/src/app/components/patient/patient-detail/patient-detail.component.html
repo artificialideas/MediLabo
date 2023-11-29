@@ -1,4 +1,12 @@
-<h1>Patient card</h1>
+<h2>Patient card</h2>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+        <a [routerLink]="['']" title="Return to patients list">Return to patients list</a>
+    </li>
+    </ol>
+</nav>
 
 <mat-card class="mt-4" *ngIf="patient">
     <mat-card-header>

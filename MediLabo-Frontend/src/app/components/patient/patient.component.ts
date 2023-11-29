@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
-import { PatientFormComponent } from './patient-form/patient-form.component';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'app-patient',
@@ -16,9 +14,7 @@ export class PatientComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private activatedRoute: ActivatedRoute,
         private patientService: PatientService,
-        public dialog: MatDialog,
     ) {}
 
     ngOnInit(): void {
@@ -30,8 +26,7 @@ export class PatientComponent implements OnInit {
         });
     }
 
-    goTo(firstname: string, lastname: string) {
-        const fullname = firstname + "-" + lastname;
+    public goToDetail(firstname: string, lastname: string) {
         this.router.navigate(
             ['/detail', {
                 firstname: firstname,
@@ -40,14 +35,9 @@ export class PatientComponent implements OnInit {
         );
     }
 
-    public openForm() {
-        const dialogRef = this.dialog.open(PatientFormComponent, {
-            width: '600px',
-            maxWidth: '90vw',
-            maxHeight: '90vh',
-        });
-        dialogRef.afterClosed().subscribe((success: string) => {
-            console.log("new user created", success)
-        });
+    public goToForm() {
+        this.router.navigate(
+            ['/add']
+        );
     }
 }

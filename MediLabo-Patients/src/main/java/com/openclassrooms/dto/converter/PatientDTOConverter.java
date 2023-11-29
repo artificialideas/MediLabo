@@ -4,12 +4,18 @@ import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.model.Patient;
 import org.springframework.util.CollectionUtils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class PatientDTOConverter {
-    public Patient getEntityFromDTO(PatientDTO dto) {
+    String datePattern = "yyyy-MM-dd";
+    DateFormat formattedDate = new SimpleDateFormat(datePattern);
+
+    public Patient getEntityFromDTO(PatientDTO dto) throws ParseException {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
@@ -17,7 +23,7 @@ public class PatientDTOConverter {
 
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
-            entity.setBirthdate(dto.getBirthdate());
+            entity.setBirthdate(formattedDate.parse(dto.getBirthdate()));
             entity.setGender(dto.getGender());
             entity.setPhoneNumber(dto.getPhoneNumber());
             entity.setAddress(dto.getAddress());
@@ -34,7 +40,7 @@ public class PatientDTOConverter {
 
             dto.setFirstName(entity.getFirstName());
             dto.setLastName(entity.getLastName());
-            dto.setBirthdate(entity.getBirthdate());
+            dto.setBirthdate(formattedDate.format(entity.getBirthdate()));
             dto.setGender(entity.getGender());
             dto.setPhoneNumber(entity.getPhoneNumber());
             dto.setAddress(entity.getAddress());

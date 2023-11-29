@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void add(PatientDTO patientDTO) {
+    public void add(PatientDTO patientDTO) throws ParseException {
         // Check if the entered patient already exists
         if (findById(patientDTO.getId()).isEmpty()) {
             patientRepository.save(patientDTOConverter.getEntityFromDTO(patientDTO));
@@ -50,7 +51,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) {
+    public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) throws ParseException {
         // Entity validation has been done in controller with findByFirstNameAndLastName()
         if (updateDataDTO.getFirstName() != null)
             savedPatientDTO.setFirstName(updateDataDTO.getFirstName());
@@ -71,7 +72,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void delete(PatientDTO patientDTO) {
+    public void delete(PatientDTO patientDTO) throws ParseException {
         patientRepository.delete(patientDTOConverter.getEntityFromDTO(patientDTO));
     }
 

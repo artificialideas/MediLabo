@@ -15,12 +15,6 @@ import { PatientDetailComponent } from './components/patient/patient-detail/pati
 import { PatientFormComponent } from './components/patient/patient-form/patient-form.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PatientComponent,
-    PatientDetailComponent,
-    PatientFormComponent
-  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -29,6 +23,12 @@ import { PatientFormComponent } from './components/patient/patient-form/patient-
     NgbModule,
     AppRoutingModule,
     MaterialModule
+  ],
+  declarations: [
+    AppComponent,
+    PatientComponent,
+    PatientDetailComponent,
+    PatientFormComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

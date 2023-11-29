@@ -22,8 +22,8 @@ export class PatientDetailComponent implements OnInit {
         const lastname = this.route.snapshot.params['lastname'];
         
         this.patientService.findPatient(firstname, lastname).subscribe((res) => {
-            console.log("res",res)
-            this.patient = res.body;
+            if (res)
+                this.patient = res.body;
         });
     }
 }

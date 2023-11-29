@@ -2,6 +2,7 @@ package com.openclassrooms.service;
 
 import com.openclassrooms.dto.PatientDTO;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface PatientService {
@@ -9,9 +10,9 @@ public interface PatientService {
 
     PatientDTO findByFirstNameAndLastName(String firstName, String lastName);
 
-    void add(PatientDTO patientDTO);
+    void add(PatientDTO patientDTO) throws ParseException;
 
-    void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO);
+    void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) throws ParseException;
 
-    void delete(PatientDTO patientDTO);
+    void delete(PatientDTO patientDTO) throws ParseException;
 }

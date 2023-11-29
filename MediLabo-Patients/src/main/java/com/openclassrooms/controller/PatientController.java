@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/patients-service")
+@RequestMapping("/patients")
 public class PatientController {
     @Autowired
     private PatientService patientService;
@@ -34,7 +35,7 @@ public class PatientController {
 
     @PostMapping("/add")
     public String addPatient(
-            @RequestBody PatientDTO patientDTO) {
+            @RequestBody PatientDTO patientDTO) throws ParseException {
         patientService.add(patientDTO);
         return "redirect:/patients/";
     }
@@ -43,7 +44,7 @@ public class PatientController {
     public String updatePatient(
             @PathVariable("firstName") String firstName,
             @PathVariable("lastName") String lastName,
-            @RequestBody PatientDTO updateDataDTO) {
+            @RequestBody PatientDTO updateDataDTO) throws ParseException {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.update(patientDTO, updateDataDTO);
@@ -54,7 +55,7 @@ public class PatientController {
     @DeleteMapping("/{firstName}-{lastName}")
     public String deletePatient(
             @PathVariable("firstName") String firstName,
-            @PathVariable("lastName") String lastName) {
+            @PathVariable("lastName") String lastName) throws ParseException {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.delete(patientDTO);
