@@ -8,12 +8,13 @@
     </ol>
 </nav>
 
-<form class="w-50">
+<form class="w-50" action="POST" [formGroup]="newPatientForm" (submit)="processRegister()">
     <div class="form-group row">
         <label for="firstName" class="col-sm-2 col-form-label">Firstname</label>
         <div class="col-sm-10">
             <input type="text" 
                 id="firstName"
+                formControlName="firstName"
                 class="form-control" 
                 placeholder="Firstname" required>
         </div>
@@ -23,6 +24,7 @@
         <div class="col-sm-10">
             <input type="text"
                 id="lastName"
+                formControlName="lastName"
                 class="form-control"
                 placeholder="Lastname" required>
         </div>
@@ -31,18 +33,21 @@
     <div class="form-group row">
         <label for="birthdate" class="col-sm-2 col-form-label">Birthdate</label>
         <mat-form-field class="col-sm-10">
-            <input matInput [matDatepicker]="birthdate" placeholder="Choose a date">
-            <mat-datepicker-toggle matSuffix [for]="birthdate"></mat-datepicker-toggle>
-            <mat-datepicker #birthdate></mat-datepicker>
+            <input matInput 
+                formControlName="birthdate"
+                [matDatepicker]="basicDatepicker" 
+                placeholder="Choose a date" required>
+            <mat-datepicker-toggle matSuffix [for]="basicDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #basicDatepicker></mat-datepicker>
         </mat-form-field>
     </div>
     <div class="form-group row">
         <label for="gender" class="col-sm-2 col-form-label">Gender</label>
-        <mat-radio-group class="col-sm-10">
-            <mat-radio-button value="M">
+        <mat-radio-group class="col-sm-10" formControlName="gender">
+            <mat-radio-button value="M" required>
                 Male
             </mat-radio-button><br/>
-            <mat-radio-button value="F">
+            <mat-radio-button value="F" required>
                 Female
             </mat-radio-button>
         </mat-radio-group>
@@ -52,6 +57,7 @@
         <div class="col-sm-10">
             <input type="text"
                 id="phoneNumber"
+                formControlName="phoneNumber"
                 class="form-control"
                 placeholder="+33 (0)X XX XX XX XX" required>
         </div>
@@ -61,6 +67,7 @@
         <div class="col-sm-10">
             <input type="text"
                 id="address"
+                formControlName="address"
                 class="form-control"
                 placeholder="Address" required>
         </div>
@@ -68,6 +75,7 @@
     
     <button mat-button
             class="btn btn-light mr-3"
+            (click)="goToList()"
             type="button">
         Cancel
     </button>

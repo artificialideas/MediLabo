@@ -1,5 +1,4 @@
 export interface IPatient {
-  id: number;
   firstName: string;
   lastName: string;
   birthdate: string;
@@ -10,7 +9,6 @@ export interface IPatient {
 
 export class Patient implements IPatient {
   constructor(
-    public id: number,
     public firstName: string,
     public lastName: string,
     public birthdate: string,
