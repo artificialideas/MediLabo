@@ -18,12 +18,11 @@ export class PatientService {
   }
 
   public findPatient(firstName: string, lastName: string): Observable<HttpResponse<Patient>> {
-    console.log(`${this.gatewayUrl}/${firstName}-${lastName}`)
     return this.http.get<Patient>(`${this.gatewayUrl}/${firstName}-${lastName}`, { observe: 'response'});
   }
 
   public add(patient: Patient): Observable<HttpResponse<Patient>> {
-    return this.http.post<Patient>(`${this.gatewayUrl}/`, patient, { observe: 'response' });
+    return this.http.post<Patient>(`${this.gatewayUrl}/add`, patient, { observe: 'response' });
   }
 
   public update(firstName: string, lastName: string, patient: Patient): Observable<HttpResponse<Patient>> {

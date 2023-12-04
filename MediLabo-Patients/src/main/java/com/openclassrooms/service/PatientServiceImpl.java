@@ -44,7 +44,9 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void add(PatientDTO patientDTO) throws ParseException {
         // Check if the entered patient already exists
-        if (findById(patientDTO.getId()).isEmpty()) {
+        Optional<Patient> patient = patientRepository.findByFirstNameAndLastName(patientDTO.getFirstName(), patientDTO.getLastName());
+
+        if (patient.isEmpty()) {
             patientRepository.save(patientDTOConverter.getEntityFromDTO(patientDTO));
         } else
             throw new ResponseStatusException(HttpStatus.IM_USED, patientDTO.getFirstName() + " " + patientDTO.getLastName() + " already exists.");

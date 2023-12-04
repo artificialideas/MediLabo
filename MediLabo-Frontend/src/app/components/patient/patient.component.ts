@@ -26,6 +26,19 @@ export class PatientComponent implements OnInit {
         });
     }
 
+    public editPatient(patient: Patient) {
+        console.log("patient to edit",patient)
+    }
+
+    public deletePatient(patient: Patient) {
+        this.patientService.delete(patient.firstName, patient.lastName).subscribe((res) => {
+            if (res) {
+                let tmp: any = res.body
+                this.patients = tmp;
+            }
+        });
+    }
+
     public goToDetail(firstname: string, lastname: string) {
         this.router.navigate(
             ['/detail', {

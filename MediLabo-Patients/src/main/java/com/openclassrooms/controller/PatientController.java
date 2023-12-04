@@ -34,32 +34,29 @@ public class PatientController {
     }
 
     @PostMapping("/add")
-    public String addPatient(
+    public void addPatient(
             @RequestBody PatientDTO patientDTO) throws ParseException {
         patientService.add(patientDTO);
-        return "redirect:/patients/";
     }
 
     @PutMapping("/{firstName}-{lastName}")
-    public String updatePatient(
+    public void updatePatient(
             @PathVariable("firstName") String firstName,
             @PathVariable("lastName") String lastName,
             @RequestBody PatientDTO updateDataDTO) throws ParseException {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.update(patientDTO, updateDataDTO);
-
-        return "redirect:/patients/{firstName}-{lastName}";
     }
 
     @DeleteMapping("/{firstName}-{lastName}")
-    public String deletePatient(
+    public List<PatientDTO> deletePatient(
             @PathVariable("firstName") String firstName,
             @PathVariable("lastName") String lastName) throws ParseException {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.delete(patientDTO);
 
-        return "redirect:/patients/";
+        return patientService.findAll();
     }
 }

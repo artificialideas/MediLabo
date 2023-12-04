@@ -19,7 +19,9 @@ public class PatientDTOConverter {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
-            entity.setId(UUID.fromString(dto.getId()));
+
+            if (dto.getId() != null)
+                entity.setId(UUID.fromString(dto.getId()));
 
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());

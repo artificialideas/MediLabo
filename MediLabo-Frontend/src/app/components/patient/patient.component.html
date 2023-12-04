@@ -7,6 +7,7 @@
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
       <th scope="col">RISK</th>
+      <th scope="col"></th> <!-- Actions -->
     </tr>
   </thead>
   <tbody>
@@ -14,11 +15,25 @@
       <td>{{ patient.firstName }}</td>
       <td>{{ patient.lastName }}</td>
       <td>RISK</td>
+      <td>
+        <button mat-button
+            (click)="editPatient(patient)"
+            title="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-button
+            (click)="deletePatient(patient)"
+            title="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
 <button mat-raised-button
     color="primary"
-    click="goToForm()">
+    click="goToForm()"
+    title="Add new">
   Add new patient
 </button>
