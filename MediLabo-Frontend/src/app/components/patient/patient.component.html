@@ -1,23 +1,24 @@
 <h2>All patients</h2>
 
 <table class="table table-striped" *ngIf="patients.length > 0">
-    <thead>
-      <tr>
-        <th scope="col">Firstname</th>
-        <th scope="col">Lastname</th>
-        <th scope="col">RISK</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let patient of patients" (click)="goToDetail(patient.firstName, patient.lastName)">
-        <td>{{ patient.firstName }}</td>
-        <td>{{ patient.lastName }}</td>
-        <td>RISK</td>
-      </tr>
-    </tbody>
+  <caption hidden>All patients list</caption>
+  <thead>
+    <tr>
+      <th scope="col">Firstname</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">RISK</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let patient of patients" (click)="goToDetail(patient.firstName, patient.lastName)">
+      <td>{{ patient.firstName }}</td>
+      <td>{{ patient.lastName }}</td>
+      <td>RISK</td>
+    </tr>
+  </tbody>
 </table>
 <button mat-raised-button
-        color="primary"
-        click="goToForm()">
-    Add new patient
+    color="primary"
+    click="goToForm()">
+  Add new patient
 </button>

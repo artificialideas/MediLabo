@@ -3,4 +3,4 @@ server:
 
 spring:
   application:
-    name: "notes-service"
+    name: "notes"
