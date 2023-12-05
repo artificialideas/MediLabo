@@ -13,8 +13,8 @@ export class PatientDetailComponent implements OnInit {
     public patient: Patient | any;
 
     constructor(
+        private route: ActivatedRoute,
         private patientService: PatientService,
-        private route: ActivatedRoute
     ) {}
 
     ngOnInit(): void {

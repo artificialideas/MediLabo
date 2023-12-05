@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { PatientComponent } from './components/patient/patient.component';
 import { PatientDetailComponent } from './components/patient/patient-detail/patient-detail.component';
 import { PatientFormComponent } from './components/patient/patient-form/patient-form.component';
+import { PatientEditComponent } from './components/patient/patient-edit/patient-edit.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { PatientFormComponent } from './components/patient/patient-form/patient-
     AppComponent,
     PatientComponent,
     PatientDetailComponent,
+    PatientEditComponent,
     PatientFormComponent
   ],
   providers: [],

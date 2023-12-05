@@ -26,8 +26,22 @@ export class PatientComponent implements OnInit {
         });
     }
 
+    public detailPatient(patient: Patient) {
+        this.router.navigate(
+            ['/detail', {
+                firstname: patient.firstName,
+                lastname: patient.lastName
+            }]
+        );
+    }
+
     public editPatient(patient: Patient) {
-        console.log("patient to edit",patient)
+        this.router.navigate(
+            ['/edit' , {
+                firstname: patient.firstName,
+                lastname: patient.lastName
+            }]
+        );
     }
 
     public deletePatient(patient: Patient) {
@@ -39,16 +53,7 @@ export class PatientComponent implements OnInit {
         });
     }
 
-    public goToDetail(firstname: string, lastname: string) {
-        this.router.navigate(
-            ['/detail', {
-                firstname: firstname,
-                lastname: lastname
-            }]
-        );
-    }
-
-    public goToForm() {
+    public addPatient() {
         this.router.navigate(
             ['/add']
         );

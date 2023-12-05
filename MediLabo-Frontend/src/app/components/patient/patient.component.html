@@ -6,16 +6,22 @@
     <tr>
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
-      <th scope="col">RISK</th>
-      <th scope="col"></th> <!-- Actions -->
+      <th scope="col" style="width: 10%">RISK</th>
+      <th scope="col" style="width: 20%"></th> <!-- Actions -->
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let patient of patients" (click)="goToDetail(patient.firstName, patient.lastName)">
+    <tr *ngFor="let patient of patients">
       <td>{{ patient.firstName }}</td>
       <td>{{ patient.lastName }}</td>
       <td>RISK</td>
       <td>
+        <button mat-button
+            (click)="detailPatient(patient)"
+            title="Patient detail">
+          <mat-icon>folder_open</mat-icon>
+        </button>
+
         <button mat-button
             (click)="editPatient(patient)"
             title="Edit">
@@ -33,7 +39,7 @@
 </table>
 <button mat-raised-button
     color="primary"
-    click="goToForm()"
+    (click)="addPatient()"
     title="Add new">
   Add new patient
 </button>
