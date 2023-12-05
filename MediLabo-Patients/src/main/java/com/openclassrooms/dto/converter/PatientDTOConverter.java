@@ -12,20 +12,21 @@ import java.util.List;
 import java.util.UUID;
 
 public class PatientDTOConverter {
-    String datePattern = "yyyy-MM-dd";
-    DateFormat formattedDate = new SimpleDateFormat(datePattern);
+    private final String datePattern = "yyyy-MM-dd";
+    private final DateFormat formattedDate = new SimpleDateFormat(datePattern);
 
     public Patient getEntityFromDTO(PatientDTO dto) throws ParseException {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
-
             if (dto.getId() != null)
                 entity.setId(UUID.fromString(dto.getId()));
 
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
-            entity.setBirthdate(formattedDate.parse(dto.getBirthdate()));
+            if (dto.getBirthdate() != null && !dto.getBirthdate().isEmpty()) {
+                entity.setBirthdate(formattedDate.parse(dto.getBirthdate()));
+            }
             entity.setGender(dto.getGender());
             entity.setPhoneNumber(dto.getPhoneNumber());
             entity.setAddress(dto.getAddress());
@@ -42,7 +43,9 @@ public class PatientDTOConverter {
 
             dto.setFirstName(entity.getFirstName());
             dto.setLastName(entity.getLastName());
-            dto.setBirthdate(formattedDate.format(entity.getBirthdate()));
+            if (entity.getBirthdate() != null) {
+                dto.setBirthdate(formattedDate.format(entity.getBirthdate()));
+            }
             dto.setGender(entity.getGender());
             dto.setPhoneNumber(entity.getPhoneNumber());
             dto.setAddress(entity.getAddress());
