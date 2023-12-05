@@ -59,7 +59,7 @@ export class PatientEditComponent implements OnInit {
             let datePipe = new DatePipe('en-US');
             let birthdateFormatted = datePipe.transform(this.editPatientForm.get('birthdate')?.value, 'yyyy-MM-dd');
             
-            const newPatient: Patient = {
+            const patient: Patient = {
                 firstName: this.editPatientForm.get('firstName')?.value,
                 lastName: this.editPatientForm.get('lastName')?.value,
                 birthdate: birthdateFormatted ?? '',
@@ -68,9 +68,9 @@ export class PatientEditComponent implements OnInit {
                 address: this.editPatientForm.get('address')?.value,
             };
             
-            this.patientService.add(newPatient).subscribe((res) => {
+            this.patientService.update(patient.firstName, patient.lastName, patient).subscribe((res) => {
                 this.snackbar
-                    .open(`${newPatient.firstName} ${newPatient.lastName} has been added to Patient's list`, undefined, {
+                    .open(`${patient.firstName} ${patient.lastName} has been edited`, undefined, {
                         duration: 3000
                     })
                     .afterOpened().subscribe(() => {
