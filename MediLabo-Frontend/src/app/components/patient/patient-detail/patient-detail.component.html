@@ -54,12 +54,18 @@
     <mat-card-footer>
         <h3>Notes:</h3>
         <ol>
-            <li *ngFor="let note of notes">
-                <p mat-line>{{ note.note }}</p>
-                <p mat-line class="small-text">
-                    <mat-icon>event</mat-icon> {{ note.date | date: 'short' }}
+            <li *ngFor="let note of notes" class="mb-3">
+                <p>{{ note.note }}</p>
+                <p class="small-text">
+                    <mat-icon>event</mat-icon> {{ note.date }}
                 </p>
             </li>
         </ol>
+        <button mat-raised-button
+            color="primary"
+            (click)="addNote()"
+            title="Add new">
+          Add new note
+        </button>
     </mat-card-footer>
 </mat-card>

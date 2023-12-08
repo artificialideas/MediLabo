@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 
+//import { OrderByPipe } from 'ngx-pipes';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +15,7 @@ import { PatientComponent } from './components/patient/patient.component';
 import { PatientDetailComponent } from './components/patient/patient-detail/patient-detail.component';
 import { PatientFormComponent } from './components/patient/patient-form/patient-form.component';
 import { PatientEditComponent } from './components/patient/patient-edit/patient-edit.component';
+import { NoteDialogComponent } from './components/note/note-dialog/note-dialog.component';
 
 @NgModule({
   imports: [
@@ -30,9 +32,10 @@ import { PatientEditComponent } from './components/patient/patient-edit/patient-
     PatientComponent,
     PatientDetailComponent,
     PatientEditComponent,
-    PatientFormComponent
+    PatientFormComponent,
+    //NoteDialogComponent
   ],
-  providers: [],
+  //providers: [OrderByPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
