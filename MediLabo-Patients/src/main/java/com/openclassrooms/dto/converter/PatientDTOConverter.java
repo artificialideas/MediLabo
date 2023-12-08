@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class PatientDTOConverter {
     private final String datePattern = "yyyy-MM-dd";
@@ -19,8 +18,7 @@ public class PatientDTOConverter {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
-            if (dto.getId() != null)
-                entity.setId(UUID.fromString(dto.getId()));
+            entity.setId(dto.getId().toLowerCase());
 
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
@@ -39,7 +37,7 @@ public class PatientDTOConverter {
         PatientDTO dto = null;
         if (entity != null) {
             dto = new PatientDTO();
-            dto.setId(String.valueOf(entity.getId()));
+            dto.setId(entity.getId().toLowerCase());
 
             dto.setFirstName(entity.getFirstName());
             dto.setLastName(entity.getLastName());

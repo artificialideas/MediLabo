@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class Patient {
     @GenericGenerator(name = "uuid-hibernate-generator",
             strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id_patient")
-    private UUID id;
+    private String id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;

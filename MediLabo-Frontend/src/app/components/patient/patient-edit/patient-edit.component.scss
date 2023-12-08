@@ -1,6 +1,11 @@
 .form-group {
-    padding: 20px 0;
+    padding: 20px 10px;
     background: #f1f1f1;
     border-radius: 5px;
     margin: 5px 0;
+    align-items: last baseline;
+}
+.form-control:disabled,
+.form-control:focus {
+    background: none !important;
 }

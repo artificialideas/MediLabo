@@ -11,18 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class NoteServiceImpl implements NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
-    private NoteDTOConverter noteDTOConverter = new NoteDTOConverter();
+    private final NoteDTOConverter noteDTOConverter = new NoteDTOConverter();
     public void NoteDTOConverter(NoteDTOConverter noteDTOConverter) {}
 
     @Override
@@ -43,39 +42,19 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<NoteDTO> findByPatientId(String patId) {
-        Iterable<Note> allNotes = noteRepository.findByPatId(UUID.fromString(patId));
+        List<Note> patientNotes = noteRepository.findByPatId(patId);
 
-        if (allNotes.iterator().hasNext()) {
-            List<Note> patientNotes = new ArrayList<>();
-            allNotes.forEach(patientNotes::add);
-
-            return noteDTOConverter.getDTOsFromEntities(patientNotes);
-        } else
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with id " + patId + " doesn't have any notes.");
+        return noteDTOConverter.getDTOsFromEntities(patientNotes);
     }
 
     @Override
-    /*public List<NoteLightDTO> findByPatientAndOrderByDateDesc(String id) {
-        List<NoteDTO> patientNotesDTO = findByPatientId(id);
-        List<NoteLightDTO> patientNotesLightDTO = new ArrayList<>();
-
-        for (NoteDTO noteDTO : patientNotesDTO) {
-            NoteLightDTO noteLightDTO = new NoteLightDTO();
-                noteLightDTO.setId(noteDTO.getId());
-                noteLightDTO.setNote(noteDTO.getNote());
-
-            patientNotesLightDTO.add(noteLightDTO);
-        }
-
-        return patientNotesLightDTO;
-    }*/
     public List<NoteLightDTO> findByPatientAndOrderByDateDesc(String id) {
         return noteRepository.findByPatIdOrderByDateDesc();
     }
 
     @Override
-    public void add(NoteDTO noteDTO) {
-        if (findById(noteDTO.getId()) != null) {
+    public void add(NoteDTO noteDTO) throws ParseException {
+        if (findByPatientId(noteDTO.getPatId()) != null) {
             Note note = noteDTOConverter.getEntityFromDTO(noteDTO);
             // Set creation date
             note.setDate(new Date());
@@ -86,26 +65,18 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void update(NoteDTO noteDTO) {
-        NoteDTO noteToSaveDTO = new NoteDTO();
+    public void update(NoteDTO savedNoteDTO, NoteDTO updateDataDTO) throws ParseException {
+        // Entity validation has been done in controller with findByPatientId()
+            // Patient's id and name are not updatable
 
-        NoteDTO savedNoteDTO = findById(noteDTO.getId());
-        if (savedNoteDTO != null)
-            noteToSaveDTO = savedNoteDTO;
+        if (updateDataDTO.getNote() != null)
+            savedNoteDTO.setNote(updateDataDTO.getNote());
 
-        if (noteDTO.getPatId() != null)
-            noteToSaveDTO.setPatId(noteDTO.getPatId());
-        if (noteDTO.getPatient() != null)
-            noteToSaveDTO.setPatient(noteDTO.getPatient());
-
-        if (noteDTO.getNote() != null)
-            noteToSaveDTO.setNote(noteDTO.getNote());
-
-        noteRepository.save(noteDTOConverter.getEntityFromDTO(noteToSaveDTO));
+        noteRepository.save(noteDTOConverter.getEntityFromDTO(savedNoteDTO));
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(String id) throws ParseException {
         noteRepository.delete(noteDTOConverter.getEntityFromDTO(findById(id)));
     }
 }

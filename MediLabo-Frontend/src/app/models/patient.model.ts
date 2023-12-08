@@ -5,6 +5,7 @@ export interface IPatient {
   gender: string;
   phoneNumber: string;
   address: string;
+  id?: string;
 }
 
 export class Patient implements IPatient {
@@ -15,5 +16,6 @@ export class Patient implements IPatient {
     public gender: string,
     public phoneNumber: string,
     public address: string,
+    public id?: string,
   ) {}
 }

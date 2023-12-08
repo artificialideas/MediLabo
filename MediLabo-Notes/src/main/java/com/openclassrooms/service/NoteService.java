@@ -3,6 +3,7 @@ package com.openclassrooms.service;
 import com.openclassrooms.dto.NoteDTO;
 import com.openclassrooms.dto.NoteLightDTO;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface NoteService {
@@ -10,7 +11,7 @@ public interface NoteService {
     NoteDTO findById(String id);
     List<NoteDTO> findByPatientId(String id);
     List<NoteLightDTO> findByPatientAndOrderByDateDesc(String id);
-    void add(NoteDTO noteDTO);
-    void update(NoteDTO noteDTO);
-    void delete(String id);
+    void add(NoteDTO noteDTO) throws ParseException;
+    void update(NoteDTO savedNoteDTO, NoteDTO updateDataDTO) throws ParseException;
+    void delete(String id) throws ParseException;
 }

@@ -7,10 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface NoteRepository extends MongoRepository<Note, ObjectId> {
-    Iterable<Note> findByPatId(UUID patId);
+    List<Note> findByPatId(String patId);
     List<NoteLightDTO> findByPatIdOrderByDateDesc();
 }

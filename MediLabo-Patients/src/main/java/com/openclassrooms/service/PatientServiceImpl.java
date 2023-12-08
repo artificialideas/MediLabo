@@ -55,13 +55,8 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) throws ParseException {
         // Entity validation has been done in controller with findByFirstNameAndLastName()
-        if (updateDataDTO.getFirstName() != null)
-            savedPatientDTO.setFirstName(updateDataDTO.getFirstName());
-        if (updateDataDTO.getLastName() != null)
-            savedPatientDTO.setLastName(updateDataDTO.getLastName());
+            // Firstname, lastname and birthday are not updatable
 
-        if (updateDataDTO.getBirthdate() != null)
-            savedPatientDTO.setBirthdate(updateDataDTO.getBirthdate());
         if (updateDataDTO.getGender() != null)
             savedPatientDTO.setGender(updateDataDTO.getGender());
 
@@ -78,7 +73,7 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.delete(patientDTOConverter.getEntityFromDTO(patientDTO));
     }
 
-    public Optional<Patient> findById(String id) {
+    private Optional<Patient> findById(String id) {
         return patientRepository.findById(UUID.fromString(id));
     }
 }

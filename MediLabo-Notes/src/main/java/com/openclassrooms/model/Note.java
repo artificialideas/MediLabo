@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
 @Document(collection = "notes")
 @Getter
@@ -16,7 +15,7 @@ public class Note {
     @Id
     private ObjectId id;
 
-    private UUID patId;
+    private String patId;
     private String patient;
 
     private String note;

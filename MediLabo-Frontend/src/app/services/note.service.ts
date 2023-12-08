@@ -6,16 +6,12 @@ import { Note } from '../models/note.model';
 @Injectable({
   providedIn: 'root'
 })
-export class NotesService {
+export class NoteService {
   public gatewayUrl: string = "http://localhost:9000/notes";
 
   constructor(
     private http: HttpClient
   ) {}
-
-  public findAll(): Observable<HttpResponse<Note[]>> {
-    return this.http.get<Note[]>(`${this.gatewayUrl}/`, { observe: 'response'});
-  }
 
   public findNote(patId: string): Observable<HttpResponse<Note>> {
     return this.http.get<Note>(`${this.gatewayUrl}/${patId}`, { observe: 'response'});

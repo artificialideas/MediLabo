@@ -27,9 +27,9 @@ export class PatientEditComponent implements OnInit {
         const firstname = this.route.snapshot.params['firstname'];
         const lastname = this.route.snapshot.params['lastname'];
         this.editPatientForm = this.fb.group({
-            firstName: new FormControl('', Validators.required),
-            lastName: new FormControl('', Validators.required),
-            birthdate: new FormControl('', Validators.required),
+            firstName: new FormControl({ value: '', disabled: true }),
+            lastName: new FormControl({ value: '', disabled: true }),
+            birthdate: new FormControl({ value: '', disabled: true }),
             gender: new FormControl('', Validators.required),
             phoneNumber: new FormControl('', Validators.required),
             address: new FormControl('', Validators.required),

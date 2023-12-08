@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -20,42 +21,34 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @GetMapping("/")
-    public List<NoteDTO> getNotes() {
-        return noteService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public NoteDTO getNote(
-            @PathVariable("patId") String id) {
-        return noteService.findById(id);
+    @GetMapping("/{patId}")
+    public List<NoteDTO> getPatientNotes(
+            @PathVariable("patId") String patId) {
+        return noteService.findByPatientId(patId);
     }
 
     @PostMapping("/add")
-    public String addNote(
-            @RequestBody NoteDTO noteDTO) {
+    public void addNote(
+            @RequestBody NoteDTO noteDTO) throws ParseException {
         noteService.add(noteDTO);
-        return "redirect:/notes/";
     }
 
     @PutMapping("/{id}")
-    public String updateNote(
+    public void updateNote(
             @PathVariable("id") String id,
-            @RequestBody NoteDTO noteToUpdateDTO) {
+            @RequestBody NoteDTO noteToUpdateDTO) throws ParseException {
         NoteDTO noteDTO = noteService.findById(id);
         if (noteDTO != null)
-            noteService.update(noteToUpdateDTO);
-
-        return "redirect:/notes/{id}";
+            noteService.update(noteDTO, noteToUpdateDTO);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteNote(
-            @PathVariable("id") String id) {
+    public List<NoteDTO> deleteNote(
+            @PathVariable("id") String id) throws ParseException {
         NoteDTO noteDTO = noteService.findById(id);
         if (noteDTO != null)
             noteService.delete(id);
 
-        return "redirect:/notes/";
+        return noteService.findAll();
     }
 }
