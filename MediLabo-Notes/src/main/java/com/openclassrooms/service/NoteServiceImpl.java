@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,11 +52,11 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void add(NoteDTO noteDTO) throws ParseException {
+    public void add(NoteDTO noteDTO) {
         if (findByPatientId(noteDTO.getPatId()) != null) {
-            Note note = noteDTOConverter.getEntityFromDTO(noteDTO);
             // Set creation date
-            note.setDate(new Date());
+            noteDTO.setDate(new Date());
+            Note note = noteDTOConverter.getEntityFromDTO(noteDTO);
 
             noteRepository.insert(note);
         } else
@@ -65,7 +64,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void update(NoteDTO savedNoteDTO, NoteDTO updateDataDTO) throws ParseException {
+    public void update(NoteDTO savedNoteDTO, NoteDTO updateDataDTO) {
         // Entity validation has been done in controller with findByPatientId()
             // Patient's id and name are not updatable
 
@@ -76,7 +75,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void delete(String id) throws ParseException {
+    public void delete(String id) {
         noteRepository.delete(noteDTOConverter.getEntityFromDTO(findById(id)));
     }
 }

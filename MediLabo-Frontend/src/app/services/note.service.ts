@@ -20,12 +20,4 @@ export class NoteService {
   public add(note: Note): Observable<HttpResponse<Note>> {
     return this.http.post<Note>(`${this.gatewayUrl}/add`, note, { observe: 'response' });
   }
-
-  public update(id: string, note: Note): Observable<HttpResponse<Note>> {
-    return this.http.put<Note>(`${this.gatewayUrl}/${id}`, note, { observe: 'response' });
-  }
-
-  public delete(id: string): Observable<HttpResponse<Note[]>> {
-    return this.http.delete<Note[]>(`${this.gatewayUrl}/${id}`, { observe: 'response' });
-  }
 }

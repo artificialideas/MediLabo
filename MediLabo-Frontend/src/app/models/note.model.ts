@@ -1,6 +1,6 @@
 export interface INote {
-  id: string;
-  date: string;
+  id?: string;
+  date?: Date;
   patId: string;
   patient: string;
   note: string;
@@ -8,10 +8,10 @@ export interface INote {
 
 export class Note implements INote {
   constructor(
-    public id: string,
-    public date: string,
     public patId: string,
-    public patient: string,
     public note: string,
+    public patient: string,
+    public id?: string,
+    public date?: Date,
   ) {}
 }

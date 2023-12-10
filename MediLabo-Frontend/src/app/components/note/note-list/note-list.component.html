@@ -1,0 +1,20 @@
+<h3>Notes:</h3>
+<ol *ngIf="notes && notes.length > 0; else emptyList">
+    <li *ngFor="let note of notes" class="mb-3">
+        <p>{{ note.note }}</p>
+        <p class="small-text">
+            <mat-icon>event</mat-icon> {{ note.date }}
+        </p>
+    </li>
+</ol>
+<ng-template #emptyList>
+    This patient doesn't have any notes added.
+</ng-template>
+
+<button mat-raised-button
+    class="mt-2"
+    color="primary"
+    (click)="addNote()"
+    title="Add new">
+    Add new note
+</button>

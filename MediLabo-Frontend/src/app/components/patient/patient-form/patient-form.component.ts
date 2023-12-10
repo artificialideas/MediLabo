@@ -28,8 +28,8 @@ export class PatientFormComponent implements OnInit {
             lastName: new FormControl('', Validators.required),
             birthdate: new FormControl('', Validators.required),
             gender: new FormControl('', Validators.required),
-            phoneNumber: new FormControl('', Validators.required),
-            address: new FormControl('', Validators.required),
+            phoneNumber: new FormControl(''),
+            address: new FormControl(''),
         });
     }
 

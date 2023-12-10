@@ -14,6 +14,7 @@ import { PatientService } from 'src/app/services/patient.service';
 })
 export class PatientEditComponent implements OnInit {
     public editPatientForm: FormGroup = new FormGroup({});
+    public patient: Patient | any;
 
     constructor(
         private route: ActivatedRoute,
@@ -31,14 +32,14 @@ export class PatientEditComponent implements OnInit {
             lastName: new FormControl({ value: '', disabled: true }),
             birthdate: new FormControl({ value: '', disabled: true }),
             gender: new FormControl('', Validators.required),
-            phoneNumber: new FormControl('', Validators.required),
-            address: new FormControl('', Validators.required),
+            phoneNumber: new FormControl(''),
+            address: new FormControl(''),
         });
         
         this.patientService.findPatient(firstname, lastname).subscribe((res) => {
             if (res) {
-                const patient: any = res.body;
-                this.initForm(patient);
+                this.patient = res.body;
+                this.initForm(this.patient);
             }
         });
     }

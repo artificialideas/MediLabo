@@ -9,3 +9,12 @@
 .form-control:focus {
     background: none !important;
 }
+
+.right-col {
+    flex-direction: column;
+    justify-content: space-between;
+    .action-buttons button {
+        display: inline-block;
+        margin-right: 20px;
+    }
+}

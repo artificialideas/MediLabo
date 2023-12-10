@@ -1,11 +1,11 @@
 export interface IPatient {
+  id?: string;
   firstName: string;
   lastName: string;
   birthdate: string;
   gender: string;
   phoneNumber: string;
   address: string;
-  id?: string;
 }
 
 export class Patient implements IPatient {

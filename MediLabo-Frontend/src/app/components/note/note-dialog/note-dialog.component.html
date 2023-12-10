@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>New note</h2>
+
+<mat-dialog-content class="form-group row" [formGroup]="newNoteForm">
+    <label for="note" class="col-form-label">Description</label>
+    <mat-form-field appearance="outline">
+        <textarea matInput
+            id="note"
+            formControlName="note"
+            class="form-control"
+            placeholder="Description" required></textarea>
+        <mat-hint>This field won't be modifiable once the note has been created.</mat-hint>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close
+            class="btn btn-light mr-3"
+            type="button">
+        Cancel
+    </button>
+    <button mat-button
+            class="btn btn-primary"
+            (click)="processRegister()"
+            type="submit">
+        Submit form
+    </button>
+</mat-dialog-actions>

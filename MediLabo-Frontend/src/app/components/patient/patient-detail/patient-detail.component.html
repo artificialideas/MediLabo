@@ -52,20 +52,7 @@
         </div>
     </mat-card-content>
     <mat-card-footer>
-        <h3>Notes:</h3>
-        <ol>
-            <li *ngFor="let note of notes" class="mb-3">
-                <p>{{ note.note }}</p>
-                <p class="small-text">
-                    <mat-icon>event</mat-icon> {{ note.date }}
-                </p>
-            </li>
-        </ol>
-        <button mat-raised-button
-            color="primary"
-            (click)="addNote()"
-            title="Add new">
-          Add new note
-        </button>
+        <app-note-list
+            [patient]="patient"></app-note-list>
     </mat-card-footer>
 </mat-card>
