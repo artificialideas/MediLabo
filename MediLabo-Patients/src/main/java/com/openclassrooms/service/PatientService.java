@@ -1,18 +1,21 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.dto.PatientDTO;
+import com.openclassrooms.model.Patient;
 
-import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 public interface PatientService {
     List<PatientDTO> findAll();
 
+    Optional<Patient> findById(String id);
+
     PatientDTO findByFirstNameAndLastName(String firstName, String lastName);
 
-    void add(PatientDTO patientDTO) throws ParseException;
+    void add(PatientDTO patientDTO);
 
-    void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) throws ParseException;
+    void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO);
 
-    void delete(PatientDTO patientDTO) throws ParseException;
+    void delete(PatientDTO patientDTO);
 }

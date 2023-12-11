@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -35,7 +34,7 @@ public class PatientController {
 
     @PostMapping("/add")
     public void addPatient(
-            @RequestBody PatientDTO patientDTO) throws ParseException {
+            @RequestBody PatientDTO patientDTO) {
         patientService.add(patientDTO);
     }
 
@@ -43,7 +42,7 @@ public class PatientController {
     public void updatePatient(
             @PathVariable("firstName") String firstName,
             @PathVariable("lastName") String lastName,
-            @RequestBody PatientDTO updateDataDTO) throws ParseException {
+            @RequestBody PatientDTO updateDataDTO) {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.update(patientDTO, updateDataDTO);
@@ -52,7 +51,7 @@ public class PatientController {
     @DeleteMapping("/{firstName}-{lastName}")
     public List<PatientDTO> deletePatient(
             @PathVariable("firstName") String firstName,
-            @PathVariable("lastName") String lastName) throws ParseException {
+            @PathVariable("lastName") String lastName) {
         PatientDTO patientDTO = patientService.findByFirstNameAndLastName(firstName, lastName);
         if (patientDTO != null)
             patientService.delete(patientDTO);

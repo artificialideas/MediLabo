@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -29,7 +29,7 @@ public class Patient {
     private String lastName;
 
     @Column(name = "birthdate", nullable = false)
-    private Date birthdate;
+    private LocalDate birthdate;
     @Column(name = "gender", nullable = false)
     private String gender;
 

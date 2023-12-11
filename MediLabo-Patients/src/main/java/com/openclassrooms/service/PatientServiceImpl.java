@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +31,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public Optional<Patient> findById(String id) {
+        return patientRepository.findById(UUID.fromString(id));
+    }
+
+    @Override
     public PatientDTO findByFirstNameAndLastName(String firstName, String lastName) {
         Optional<Patient> patient = patientRepository.findByFirstNameAndLastName(firstName, lastName);
 
@@ -42,7 +46,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void add(PatientDTO patientDTO) throws ParseException {
+    public void add(PatientDTO patientDTO) {
         // Check if the entered patient already exists
         Optional<Patient> patient = patientRepository.findByFirstNameAndLastName(patientDTO.getFirstName(), patientDTO.getLastName());
 
@@ -53,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) throws ParseException {
+    public void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO) {
         // Entity validation has been done in controller with findByFirstNameAndLastName()
             // Firstname, lastname and birthday are not updatable
 
@@ -69,11 +73,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void delete(PatientDTO patientDTO) throws ParseException {
+    public void delete(PatientDTO patientDTO) {
         patientRepository.delete(patientDTOConverter.getEntityFromDTO(patientDTO));
-    }
-
-    private Optional<Patient> findById(String id) {
-        return patientRepository.findById(UUID.fromString(id));
     }
 }

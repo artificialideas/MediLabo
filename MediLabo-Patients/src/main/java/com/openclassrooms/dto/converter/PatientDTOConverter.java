@@ -4,26 +4,24 @@ import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.model.Patient;
 import org.springframework.util.CollectionUtils;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDTOConverter {
-    private final String datePattern = "yyyy-MM-dd";
-    private final DateFormat formattedDate = new SimpleDateFormat(datePattern);
-
-    public Patient getEntityFromDTO(PatientDTO dto) throws ParseException {
+    public Patient getEntityFromDTO(PatientDTO dto) {
         Patient entity = null;
         if (dto != null) {
             entity = new Patient();
-            entity.setId(dto.getId().toLowerCase());
+            if (dto.getId() != null) {
+                entity.setId(dto.getId().toLowerCase());
+            }
 
             entity.setFirstName(dto.getFirstName());
             entity.setLastName(dto.getLastName());
             if (dto.getBirthdate() != null && !dto.getBirthdate().isEmpty()) {
-                entity.setBirthdate(formattedDate.parse(dto.getBirthdate()));
+                entity.setBirthdate(LocalDate.parse(dto.getBirthdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             entity.setGender(dto.getGender());
             entity.setPhoneNumber(dto.getPhoneNumber());
@@ -42,7 +40,7 @@ public class PatientDTOConverter {
             dto.setFirstName(entity.getFirstName());
             dto.setLastName(entity.getLastName());
             if (entity.getBirthdate() != null) {
-                dto.setBirthdate(formattedDate.format(entity.getBirthdate()));
+                dto.setBirthdate(String.valueOf(entity.getBirthdate()));
             }
             dto.setGender(entity.getGender());
             dto.setPhoneNumber(entity.getPhoneNumber());

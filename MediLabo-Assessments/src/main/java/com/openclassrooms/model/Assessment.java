@@ -1,17 +1,8 @@
 package com.openclassrooms.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Getter
-@Setter
-@Entity
-@Table(name = "Assessments")
+@Data
 public class Assessment {
     public enum Risk {
         NONE,
@@ -20,11 +11,7 @@ public class Assessment {
         EARLY_ONSET
     }
 
-    @Id
-    @Column(name = "id_patient")
     private String patId;
 
-    @Column(name = "patient_status",
-            nullable = false)
     private Risk status;
 }

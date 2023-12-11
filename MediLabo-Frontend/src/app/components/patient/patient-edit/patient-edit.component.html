@@ -1,4 +1,4 @@
-<h2>New patient</h2>
+<h2>Patient detail</h2>
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -8,7 +8,7 @@
     </ol>
 </nav>
 
-<form class="container row" [formGroup]="editPatientForm" (submit)="processRegister()">
+<form class="container row" *ngIf="patient" [formGroup]="editPatientForm" (submit)="processRegister()">
     <div class="col">
         <div class="form-group row">
             <label for="firstName" class="col-sm-2 col-form-label">Firstname</label>
