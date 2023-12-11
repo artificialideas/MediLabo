@@ -1,4 +1,4 @@
-package com.openclassrooms.dto;
+package com.openclassrooms;
 
 import lombok.Data;
 

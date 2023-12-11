@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/MediLabo-Gateway/pom.xml" />
         <option value="$PROJECT_DIR$/MediLabo-Patients/pom.xml" />
         <option value="$PROJECT_DIR$/MediLabo-Assessments/pom.xml" />
+        <option value="$PROJECT_DIR$/MediLabo-SharedDTOs/pom.xml" />
+        <option value="$PROJECT_DIR$/MediLabo-Shared/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

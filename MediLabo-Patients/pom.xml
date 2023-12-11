@@ -91,6 +91,12 @@
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
         </dependency>-->
+
+        <dependency>
+            <groupId>com.openclassrooms</groupId>
+            <artifactId>MediLabo-Shared</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

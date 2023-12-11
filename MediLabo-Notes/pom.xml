@@ -70,6 +70,12 @@
       <version>6.2.8.Final</version>
       <scope>compile</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.openclassrooms</groupId>
+      <artifactId>MediLabo-Shared</artifactId>
+      <version>1.0.0</version>
+    </dependency>
   </dependencies>
 
   <build>

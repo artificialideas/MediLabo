@@ -1,6 +1,6 @@
 package com.openclassrooms.dto.converter;
 
-import com.openclassrooms.dto.PatientDTO;
+import com.openclassrooms.PatientDTO;
 import com.openclassrooms.model.Patient;
 import org.springframework.util.CollectionUtils;
 

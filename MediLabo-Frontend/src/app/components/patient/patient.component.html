@@ -6,7 +6,7 @@
     <tr>
       <th scope="col">Firstname</th>
       <th scope="col">Lastname</th>
-      <th scope="col" style="width: 10%">RISK</th>
+      <th scope="col" style="width: 10%">Risk</th>
       <th scope="col" style="width: 20%"></th> <!-- Actions -->
     </tr>
   </thead>
@@ -14,7 +14,7 @@
     <tr *ngFor="let patient of patients">
       <td>{{ patient.firstName }}</td>
       <td>{{ patient.lastName }}</td>
-      <td>RISK</td>
+      <td>{{ patient.risk }}</td>
       <td>
         <button mat-button
             (click)="detailPatient(patient)"

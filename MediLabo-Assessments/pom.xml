@@ -18,7 +18,7 @@
     <name>MediLabo-Assessments</name>
     <description>OpenClassroom 9th project with Spring Boot - Assessments Back-end microservice</description>
     <properties>
-        <java.version>15</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
@@ -32,6 +32,11 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.3</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -52,14 +57,25 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <version>6.1.0-RC1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.openclassrooms</groupId>
-            <artifactId>MediLabo-Notes</artifactId>
+            <artifactId>MediLabo-Shared</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.openclassrooms</groupId>
+            <artifactId>MediLabo-Patients</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.openclassrooms</groupId>
-            <artifactId>MediLabo-Patients</artifactId>
+            <artifactId>MediLabo-Notes</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

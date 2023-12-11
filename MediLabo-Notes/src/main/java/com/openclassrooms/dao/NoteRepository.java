@@ -1,6 +1,5 @@
 package com.openclassrooms.dao;
 
-import com.openclassrooms.dto.NoteLightDTO;
 import com.openclassrooms.model.Note;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,5 +10,4 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends MongoRepository<Note, ObjectId> {
     List<Note> findByPatId(String patId);
-    List<NoteLightDTO> findByPatIdOrderByDateDesc();
 }

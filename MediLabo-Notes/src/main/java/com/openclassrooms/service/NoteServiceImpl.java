@@ -1,8 +1,7 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.dao.NoteRepository;
-import com.openclassrooms.dto.NoteDTO;
-import com.openclassrooms.dto.NoteLightDTO;
+import com.openclassrooms.NoteDTO;
 import com.openclassrooms.dto.converter.NoteDTOConverter;
 import com.openclassrooms.model.Note;
 import org.bson.types.ObjectId;
@@ -47,11 +46,6 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<NoteLightDTO> findByPatientAndOrderByDateDesc(String id) {
-        return noteRepository.findByPatIdOrderByDateDesc();
-    }
-
-    @Override
     public void add(NoteDTO noteDTO) {
         if (findByPatientId(noteDTO.getPatId()) != null) {
             // Set creation date
@@ -77,5 +71,10 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public void delete(String id) {
         noteRepository.delete(noteDTOConverter.getEntityFromDTO(findById(id)));
+    }
+
+    @Override
+    public List<NoteDTO> getData(String patId) {
+        return findByPatientId(patId);
     }
 }

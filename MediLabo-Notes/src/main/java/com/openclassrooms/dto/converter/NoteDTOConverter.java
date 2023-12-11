@@ -1,6 +1,6 @@
 package com.openclassrooms.dto.converter;
 
-import com.openclassrooms.dto.NoteDTO;
+import com.openclassrooms.NoteDTO;
 import com.openclassrooms.model.Note;
 import org.bson.types.ObjectId;
 import org.springframework.util.CollectionUtils;

@@ -1,7 +1,7 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.dao.PatientRepository;
-import com.openclassrooms.dto.PatientDTO;
+import com.openclassrooms.PatientDTO;
 import com.openclassrooms.dto.converter.PatientDTOConverter;
 import com.openclassrooms.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +75,15 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void delete(PatientDTO patientDTO) {
         patientRepository.delete(patientDTOConverter.getEntityFromDTO(patientDTO));
+    }
+
+    @Override
+    public PatientDTO getData(String id) {
+        Optional<Patient> patient = findById(id);
+
+        if (patient.isPresent()) {
+            return patientDTOConverter.getDTOFromEntity(patient.get());
+        } else
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with id " + id + " doesn't exists.");
     }
 }

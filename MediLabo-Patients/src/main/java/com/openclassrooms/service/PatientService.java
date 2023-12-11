@@ -1,6 +1,6 @@
 package com.openclassrooms.service;
 
-import com.openclassrooms.dto.PatientDTO;
+import com.openclassrooms.PatientDTO;
 import com.openclassrooms.model.Patient;
 
 import java.util.List;
@@ -18,4 +18,6 @@ public interface PatientService {
     void update(PatientDTO savedPatientDTO, PatientDTO updateDataDTO);
 
     void delete(PatientDTO patientDTO);
+
+    PatientDTO getData(String id);
 }

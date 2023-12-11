@@ -1,8 +1,9 @@
 package com.openclassrooms.controller;
 
-import com.openclassrooms.dto.PatientDTO;
+import com.openclassrooms.PatientDTO;
 import com.openclassrooms.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,13 @@ public class PatientController {
             patientService.delete(patientDTO);
 
         return patientService.findAll();
+    }
+
+    @GetMapping("/api-data/{id}")
+    public ResponseEntity<PatientDTO> getData(
+            @PathVariable("id") String id) {
+        PatientDTO data = patientService.getData(id);
+
+        return ResponseEntity.ok(data);
     }
 }
