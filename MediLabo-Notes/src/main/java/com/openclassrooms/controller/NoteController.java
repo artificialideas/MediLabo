@@ -1,6 +1,6 @@
 package com.openclassrooms.controller;
 
-import com.openclassrooms.NoteDTO;
+import com.openclassrooms.dto.NoteDTO;
 import com.openclassrooms.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

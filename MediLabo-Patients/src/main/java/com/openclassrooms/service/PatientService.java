@@ -1,6 +1,6 @@
 package com.openclassrooms.service;
 
-import com.openclassrooms.PatientDTO;
+import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.model.Patient;
 
 import java.util.List;

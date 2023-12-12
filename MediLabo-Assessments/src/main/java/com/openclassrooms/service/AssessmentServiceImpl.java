@@ -1,8 +1,8 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.config.KeywordsConfig;
-import com.openclassrooms.NoteDTO;
-import com.openclassrooms.PatientDTO;
+import com.openclassrooms.dto.NoteDTO;
+import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.model.Assessment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +24,6 @@ public class AssessmentServiceImpl implements AssessmentService {
     private KeywordsConfig keywordsConfig;
     @Autowired
     private WebClient.Builder webClientBuilder;
-    @Autowired
-    private PatientService patientService;
-    @Autowired
-    private NoteService noteService;
-
-    public AssessmentServiceImpl() {
-    }
 
     public Mono<PatientDTO> getDataFromServicePatients(String id) {
         String url = "http://localhost:9000/patients/api-data/" + id;

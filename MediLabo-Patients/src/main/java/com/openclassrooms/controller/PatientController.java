@@ -1,6 +1,6 @@
 package com.openclassrooms.controller;
 
-import com.openclassrooms.PatientDTO;
+import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

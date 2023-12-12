@@ -1,7 +1,7 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.dao.PatientRepository;
-import com.openclassrooms.PatientDTO;
+import com.openclassrooms.dto.PatientDTO;
 import com.openclassrooms.dto.converter.PatientDTOConverter;
 import com.openclassrooms.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;

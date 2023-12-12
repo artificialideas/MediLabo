@@ -1,6 +1,6 @@
 package com.openclassrooms.service;
 
-import com.openclassrooms.NoteDTO;
+import com.openclassrooms.dto.NoteDTO;
 
 import java.util.List;
 

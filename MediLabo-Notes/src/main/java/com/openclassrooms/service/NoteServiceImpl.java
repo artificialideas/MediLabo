@@ -1,7 +1,7 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.dao.NoteRepository;
-import com.openclassrooms.NoteDTO;
+import com.openclassrooms.dto.NoteDTO;
 import com.openclassrooms.dto.converter.NoteDTOConverter;
 import com.openclassrooms.model.Note;
 import org.bson.types.ObjectId;
