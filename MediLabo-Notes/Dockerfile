@@ -1,5 +1,5 @@
 #Source image with :
-FROM eclipse-temurin:15-jre-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 #Create and define working directory
 WORKDIR /app
@@ -13,10 +13,10 @@ COPY src src
 RUN ./mvnw install -DskipTests
 
 # Copy the jar from local machine into image to build
-COPY target/*.jar MediLabo-Patients-1.0-SNAPSHOT.jar
+COPY target/*.jar MediLabo-Notes-1.0-SNAPSHOT.jar
 
 #Port
-EXPOSE 9001
+EXPOSE 9002
 
 # Define command to run java application
-CMD ["java", "-jar", "MediLabo-Patients-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "MediLabo-Notes-1.0-SNAPSHOT.jar"]

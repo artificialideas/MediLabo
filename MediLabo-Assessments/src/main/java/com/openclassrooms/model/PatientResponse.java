@@ -1,9 +1,9 @@
-package com.openclassrooms.dto;
+package com.openclassrooms.model;
 
 import lombok.Data;
 
 @Data
-public class PatientDTO {
+public class PatientResponse {
     private String id;
     private String firstName;
     private String lastName;
