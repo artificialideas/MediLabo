@@ -7,7 +7,6 @@ import com.openclassrooms.model.PatientResponse;
 import com.openclassrooms.proxy.AssessmentProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,13 +26,13 @@ public class AssessmentServiceImpl implements AssessmentService {
 
     @Override
     public Assessment getPatientRisk(String patId) {
-        ResponseEntity<PatientResponse> patientResponse = assessmentProxy.getDataFromServicePatients(patId);
+        PatientResponse patientResponse = assessmentProxy.getDataFromServicePatients(patId);
 
-        if (patientResponse.getStatusCode().is2xxSuccessful() && patientResponse.hasBody()) {
-            ResponseEntity<List<NoteResponse>> noteResponseList = assessmentProxy.getDocumentsFromServiceNotes(patId);
-            if (noteResponseList.getStatusCode().is2xxSuccessful()) {
+        if (patientResponse != null) {
+            List<NoteResponse> noteResponseList = assessmentProxy.getDocumentsFromServiceNotes(patId);
+            if (noteResponseList != null) {
                 try {
-                    return calculateRisk(Objects.requireNonNull(patientResponse.getBody()), Objects.requireNonNull(noteResponseList.getBody()));
+                    return calculateRisk(patientResponse, noteResponseList);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -50,7 +49,8 @@ public class AssessmentServiceImpl implements AssessmentService {
         int age = getAge(LocalDate.parse(patientResponse.getBirthdate()));
         List<String> riskKeywords = getKeywords();
         long notesKeywords = patientNotes.stream()
-                .filter(noteDTO -> riskKeywords.contains(noteDTO.getNote()))
+                .flatMap(noteDTO -> riskKeywords.stream()
+                        .filter(keyword -> noteDTO.getNote().contains(keyword)))
                 .count();
 
         if (patientNotes.isEmpty()) {
@@ -61,9 +61,19 @@ public class AssessmentServiceImpl implements AssessmentService {
             risk.setStatus(Assessment.Risk.DANGER);
         } else if (isEarlyOnsetCondition(patientResponse, age, notesKeywords)) {
             risk.setStatus(Assessment.Risk.EARLY_ONSET);
-        }
+        } else
+            risk.setStatus(Assessment.Risk.NONE);
 
         return risk;
+    }
+
+    int getAge(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthday, currentDate).getYears();
+    }
+
+    private List<String> getKeywords() throws IOException {
+        return keywordsConfig.getRiskKeywords();
     }
 
     private boolean isDangerCondition(PatientResponse patientResponse, int age, long notesKeywords) {
@@ -76,14 +86,5 @@ public class AssessmentServiceImpl implements AssessmentService {
         return (Objects.equals(patientResponse.getGender(), "M") && age <= 30 && notesKeywords >= 5) ||
                 (Objects.equals(patientResponse.getGender(), "F") && age <= 30 && notesKeywords >= 7) ||
                 (age > 30 && notesKeywords >= 8);
-    }
-
-    private List<String> getKeywords() throws IOException {
-        return keywordsConfig.getRiskKeywords();
-    }
-
-    int getAge(LocalDate birthday) {
-        LocalDate currentDate = LocalDate.now();
-        return Period.between(birthday, currentDate).getYears();
     }
 }
