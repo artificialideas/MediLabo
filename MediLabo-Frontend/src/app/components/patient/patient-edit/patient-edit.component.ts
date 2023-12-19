@@ -84,12 +84,17 @@ export class PatientEditComponent implements OnInit {
                 this.snackbar
                     .open(`${patient.firstName} ${patient.lastName} has been edited`, undefined, {
                         duration: 3000
-                    })
-                    .afterOpened().subscribe(() => {
-                            this.router.navigate(
-                            ['/']
-                        );
                     });
+            });
+        }
+    }
+
+    public relaunchAssessment(event: boolean) {
+        if (event) {
+            this.assessmentService.findRisk(this.patient.id).subscribe((res) => {
+                if (res?.body) {
+                    this.patient.risk = res.body.status;
+                }
             });
         }
     }

@@ -39,4 +39,14 @@ export class PatientDetailComponent implements OnInit {
             }
         });
     }
+
+    public relaunchAssessment(event: boolean) {
+        if (event) {
+            this.assessmentService.findRisk(this.patient.id).subscribe((res) => {
+                if (res?.body) {
+                    this.patient.risk = res.body.status;
+                }
+            });
+        }
+    }
 }

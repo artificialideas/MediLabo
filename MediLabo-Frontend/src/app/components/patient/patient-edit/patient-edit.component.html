@@ -83,6 +83,7 @@
 
     <div class="col d-flex right-col">
         <app-note-list
+            (addedNote)="relaunchAssessment($event)"
             [patient]="patient"></app-note-list>
         
         <div class="action-buttons mt-4">

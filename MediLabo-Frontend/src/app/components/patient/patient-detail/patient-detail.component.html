@@ -53,6 +53,7 @@
     </mat-card-content>
     <mat-card-footer>
         <app-note-list
+            (addedNote)="relaunchAssessment($event)"
             [patient]="patient"></app-note-list>
     </mat-card-footer>
 </mat-card>

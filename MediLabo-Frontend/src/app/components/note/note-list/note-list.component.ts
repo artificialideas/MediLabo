@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
@@ -18,6 +18,7 @@ export class NoteListComponent implements OnInit {
     public notes: Note[] = [];
 
     @Input() patient: Patient | any;
+    @Output() addedNote = new EventEmitter<boolean>();
     
     constructor(
         private dialog: MatDialog,
@@ -69,8 +70,10 @@ export class NoteListComponent implements OnInit {
             tap(() => this.showSnackbar()),
             switchMap(() => {
                 this.loadNotes(); // Use the loadNotes function
+                this.addedNote.emit(true); // Alert parent of new added note so patient's risk can be reevaluated
+
                 return EMPTY; // Return an observable to satisfy the pipe
-              })
+            })
         ).subscribe();
     }
 

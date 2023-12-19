@@ -48,14 +48,15 @@ public class AssessmentServiceImpl implements AssessmentService {
 
         int age = getAge(LocalDate.parse(patientResponse.getBirthdate()));
         List<String> riskKeywords = getKeywords();
-        long notesKeywords = patientNotes.stream()
+        /*long notesKeywords = patientNotes.stream()
                 .flatMap(noteDTO -> riskKeywords.stream()
                         .filter(keyword -> noteDTO.getNote().contains(keyword)))
-                .count();
+                .count();*/
+        int notesKeywords = getKeywordsCount(patientNotes, riskKeywords);
 
         if (patientNotes.isEmpty()) {
             risk.setStatus(Assessment.Risk.NONE);
-        } else if (notesKeywords >= 2 && notesKeywords <= 5 && age >= 30) {
+        } else if ((notesKeywords >= 2 && notesKeywords <= 5) && age >= 30) {
             risk.setStatus(Assessment.Risk.BORDERLINE);
         } else if (isDangerCondition(patientResponse, age, notesKeywords)) {
             risk.setStatus(Assessment.Risk.DANGER);
@@ -74,6 +75,18 @@ public class AssessmentServiceImpl implements AssessmentService {
 
     private List<String> getKeywords() throws IOException {
         return keywordsConfig.getRiskKeywords();
+    }
+
+    static int getKeywordsCount(List<NoteResponse> patientNotes, List<String> riskKeywords) {
+        int counter = 0;
+        for (NoteResponse note : patientNotes) {
+            for (String keyword : riskKeywords) {
+                if (note.getNote().toLowerCase().contains(keyword.toLowerCase()))
+                    counter++;
+            }
+        }
+
+        return counter;
     }
 
     private boolean isDangerCondition(PatientResponse patientResponse, int age, long notesKeywords) {
