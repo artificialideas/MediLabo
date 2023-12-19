@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.openclassrooms</groupId>
-    <artifactId>MediLabo-Patients</artifactId>
+    <artifactId>medilabo-patients</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>MediLabo-Patients</name>
+    <name>medilabo-patients</name>
     <description>OpenClassroom 9th project with Spring Boot - Patient Back-end microservice</description>
     <properties>
         <java.version>15</java.version>

@@ -10,24 +10,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MediLabo-Gateway" />
-        <module name="MediLabo-Patients" />
-        <module name="MediLabo-Notes" />
-        <module name="MediLabo-Assessments" />
+        <module name="medilabo-gateway" />
+        <module name="medilabo-assessments" />
+        <module name="medilabo-notes" />
+        <module name="medilabo-patients" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="medilabo-patients" target="15" />
       <module name="MediLabo-Shared" target="1.8" />
       <module name="MediLabo-SharedDTOs" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="MediLabo-Assessments" options="-parameters" />
-      <module name="MediLabo-Gateway" options="-parameters" />
-      <module name="MediLabo-Notes" options="-parameters" />
-      <module name="MediLabo-Patients" options="-parameters" />
+      <module name="medilabo-assessments" options="-parameters" />
+      <module name="medilabo-gateway" options="-parameters" />
+      <module name="medilabo-notes" options="-parameters" />
+      <module name="medilabo-patients" options="-parameters" />
     </option>
   </component>
 </project>

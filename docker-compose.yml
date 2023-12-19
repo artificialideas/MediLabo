@@ -1,0 +1,101 @@
+version: "3.2"
+services:
+  # Databases
+  mssqldb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssqldb
+    restart: always
+    environment:
+      - "MSSQL_DATABASE=ML_Patients_OC"
+      - "MSSQL_USER=OPC9"
+      - "MSSQL_PASSWORD=${spring.datasource.password}"
+    volumes:
+      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
+    ports:
+      - "1433:1433"
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+      MONGO_INITDB_DATABASE: ML_Notes_OC
+    volumes:
+      - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    ports:
+      - "27018:27017"
+
+  # Services
+  medilabo-gateway:
+    build:
+      context: ./medilabo-gateway
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./medilabo-gateway:/app
+
+  medilabo-patients:
+    build:
+      context: ./medilabo-patients
+    image: medilabo-patient:latest
+    container_name: medilabo-patients
+    environment:
+      - "SPRING_DATASOURCE_URL=jdbc:sqlserver://localhost:1433;encrypt=false;database=ML_Patients_OC"
+      - "SPRING_DATASOURCE_USERNAME=OPC9"
+      - "SPRING_DATASOURCE_PASSWORD=${spring.datasource.password}"
+    depends_on:
+      mssqldb:
+        condition: service_started
+    ports:
+      - "9001:9001"
+    restart: on-failure
+
+  medilabo-notes:
+    build:
+      context: ./medilabo-notes
+    image: medilabo-notes:latest
+    container_name: medilabo-notes
+    environment:
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: ML_Notes_OC
+    depends_on:
+      mongodb:
+        condition: service_started
+    ports:
+      - "9002:9002"
+    restart: on-failure
+
+  medilabo-assessments:
+    build:
+      context: ./medilabo-assessments
+    image: medilabo-assessments:latest
+    container_name: medilabo-assessments
+    depends_on:
+      medilabo-patients:
+        condition: service_started
+      medilabo-notes:
+        condition: service_started
+    ports:
+      - "9003:9003"
+    restart: on-failure
+
+  medilabo-frontend:
+    build:
+      context: ./medilabo-frontend
+    image: medilabo-frontend:latest
+    container_name: medilabo-frontend
+    depends_on:
+      medilabo-patients:
+        condition: service_started
+      medilabo-notes:
+        condition: service_started
+      medilabo-gateway:
+        condition: service_started
+      medilabo-assessments:
+        condition: service_started
+    ports:
+      - "4200:4200"
+    restart: on-failure
+
