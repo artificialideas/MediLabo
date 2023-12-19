@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, forkJoin, map, mergeMap, switchMap } from 'rxjs';
-import { Assessment } from 'src/app/models/assessment.model';
+import { Observable, forkJoin, map, mergeMap, of } from 'rxjs';
 
-import { Patient } from 'src/app/models/patient.model';
+import { FullPatient, Patient } from 'src/app/models/patient.model';
 import { AssessmentService } from 'src/app/services/assessment.service';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -13,7 +12,7 @@ import { PatientService } from 'src/app/services/patient.service';
     styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent implements OnInit {
-    public patients: Patient[] = [];
+    public patients: FullPatient[] = [];
 
     constructor(
         private router: Router,
@@ -23,28 +22,25 @@ export class PatientComponent implements OnInit {
 
     ngOnInit(): void {
         this.patientService.findAll().pipe(
-            switchMap((res) => {
-                const patients = res?.body ?? []; // Use optional chaining to handle null or undefined
-
-                const patientObservables = patients.map((patient: any) => {
-                return this.assessmentService.findRisk(patient.id).pipe(
-                    // Map the assessment to the patient ID for later use
-                    map((assessmentResponse: any) => {
-                        // Use assessmentResponse.body to get the actual Assessment object -> endpoint returns Mono<Assessment>
-                        const assessment = assessmentResponse.body;
-                        return { assessment, patId: patient.id };
-                      })
-                );
-            });
-          
-                // Use forkJoin to wait for all patientObservables to complete
-                return forkJoin(patientObservables);
+            mergeMap((res) => {
+                if (res?.body) {
+                    this.patients = res.body;
+                    
+                    const requests: Observable<any>[] = this.patients.map((patient: any) =>
+                        this.assessmentService.findRisk(patient.id).pipe(
+                            // Extract the body of the HTTP response
+                            map(response => response.body)
+                        )
+                    );
+                    return forkJoin(requests);
+                } else
+                    return of(null);
             })
-        ).subscribe((results: any[]) => {
-            results.forEach(({ assessment, patId }) => {
-                const patient: any = this.patients.find((p: any) => p.id === patId);
-                patient.risk = assessment.status;
-            });
+        ).subscribe((results) => {
+            if (results)
+                results.forEach((assessment, index) => {
+                    this.patients[index].risk = assessment.status;
+                });
         });
     }
 

@@ -1,4 +1,6 @@
-import { Assessment } from "./assessment.model";
+export interface FullPatient extends IPatient {
+  risk?: string;
+}
 
 export interface IPatient {
   id?: string;
@@ -8,8 +10,6 @@ export interface IPatient {
   gender: string;
   phoneNumber: string;
   address: string;
-
-  risk?: Assessment;
 }
 
 export class Patient implements IPatient {
@@ -20,8 +20,6 @@ export class Patient implements IPatient {
     public gender: string,
     public phoneNumber: string,
     public address: string,
-    public id?: string,
-    
-    public risk?: Assessment,
+    public id?: string
   ) {}
 }

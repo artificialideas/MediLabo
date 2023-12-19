@@ -11,7 +11,7 @@
 <mat-card class="mt-4" *ngIf="patient">
     <mat-card-header>
         <mat-card-title>{{ patient.firstName }} {{ patient.lastName }}</mat-card-title>
-        <mat-card-subtitle>Risk status: RISK</mat-card-subtitle>
+        <mat-card-subtitle>Risk status: <strong>{{ patient.risk }}</strong></mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <h3>Details:</h3>

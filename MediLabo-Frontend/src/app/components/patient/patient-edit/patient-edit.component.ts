@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { concatMap, of } from 'rxjs';
 
-import { Patient } from 'src/app/models/patient.model';
+import { FullPatient, Patient } from 'src/app/models/patient.model';
+import { AssessmentService } from 'src/app/services/assessment.service';
 import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
@@ -14,7 +16,7 @@ import { PatientService } from 'src/app/services/patient.service';
 })
 export class PatientEditComponent implements OnInit {
     public editPatientForm: FormGroup = new FormGroup({});
-    public patient: Patient | any;
+    public patient: FullPatient | any;
 
     constructor(
         private route: ActivatedRoute,
@@ -22,6 +24,7 @@ export class PatientEditComponent implements OnInit {
         private fb: FormBuilder,
         private snackbar: MatSnackBar,
         private patientService: PatientService,
+        private assessmentService: AssessmentService
     ) {}
 
     ngOnInit(): void {
@@ -36,9 +39,17 @@ export class PatientEditComponent implements OnInit {
             address: new FormControl(''),
         });
         
-        this.patientService.findPatient(firstname, lastname).subscribe((res) => {
-            if (res) {
-                this.patient = res.body;
+        this.patientService.findPatient(firstname, lastname).pipe(
+            concatMap((res) => {
+                if (res) {
+                    this.patient = res.body;
+                    return this.assessmentService.findRisk(this.patient.id);
+                } else
+                    return of(null);
+            })
+        ).subscribe((res) => {
+            if (res?.body) {
+                this.patient.risk = res.body.status;
                 this.initForm(this.patient);
             }
         });

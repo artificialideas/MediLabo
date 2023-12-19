@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap, map, of } from 'rxjs';
+import { concatMap, of } from 'rxjs';
 
-import { Patient } from 'src/app/models/patient.model';
+import { FullPatient } from 'src/app/models/patient.model';
+import { AssessmentService } from 'src/app/services/assessment.service';
 
 import { PatientService } from 'src/app/services/patient.service';
-import { NoteService } from 'src/app/services/note.service';
 
 @Component({
     selector: 'app-patient-detail',
@@ -13,21 +13,29 @@ import { NoteService } from 'src/app/services/note.service';
     styleUrls: ['./patient-detail.component.scss']
 })
 export class PatientDetailComponent implements OnInit {
-    public patient: Patient | any;
+    public patient: FullPatient | any;
 
     constructor(
         private route: ActivatedRoute,
         private patientService: PatientService,
-        private noteService: NoteService
+        private assessmentService: AssessmentService
     ) {}
 
     ngOnInit(): void {
         const firstname = this.route.snapshot.params['firstname'];
         const lastname = this.route.snapshot.params['lastname'];
         
-        this.patientService.findPatient(firstname, lastname).subscribe((res) => {
-            if (res) {
-                this.patient = res.body;
+        this.patientService.findPatient(firstname, lastname).pipe(
+            concatMap((res) => {
+                if (res) {
+                    this.patient = res.body;
+                    return this.assessmentService.findRisk(this.patient.id);
+                } else
+                    return of(null);
+            })
+        ).subscribe((res) => {
+            if (res?.body) {
+                this.patient.risk = res.body.status;
             }
         });
     }
