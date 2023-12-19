@@ -12,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -32,7 +31,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Optional<Patient> findById(String id) {
-        return patientRepository.findById(UUID.fromString(id));
+        return patientRepository.findById(id);
     }
 
     @Override

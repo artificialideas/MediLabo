@@ -1,12 +1,13 @@
 package com.openclassrooms.service;
 
 import com.openclassrooms.config.KeywordsConfig;
-import com.openclassrooms.proxy.AssessmentProxy;
+import com.openclassrooms.model.Assessment;
 import com.openclassrooms.model.NoteResponse;
 import com.openclassrooms.model.PatientResponse;
-import com.openclassrooms.model.Assessment;
+import com.openclassrooms.proxy.AssessmentProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,16 +27,18 @@ public class AssessmentServiceImpl implements AssessmentService {
 
     @Override
     public Assessment getPatientRisk(String patId) {
-        PatientResponse patientResponse = assessmentProxy.getDataFromServicePatients(patId);
+        ResponseEntity<PatientResponse> patientResponse = assessmentProxy.getDataFromServicePatients(patId);
 
-        if (patientResponse != null) {
-            List<NoteResponse> noteResponseList = assessmentProxy.getDocumentsFromServiceNotes(patId);
-
-            try {
-                return calculateRisk(patientResponse, noteResponseList);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        if (patientResponse.getStatusCode().is2xxSuccessful() && patientResponse.hasBody()) {
+            ResponseEntity<List<NoteResponse>> noteResponseList = assessmentProxy.getDocumentsFromServiceNotes(patId);
+            if (noteResponseList.getStatusCode().is2xxSuccessful()) {
+                try {
+                    return calculateRisk(Objects.requireNonNull(patientResponse.getBody()), Objects.requireNonNull(noteResponseList.getBody()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error fetching notes for patient patient " + patId + ".");
         } else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient with id " + patId + " doesn't exist.");
     }
