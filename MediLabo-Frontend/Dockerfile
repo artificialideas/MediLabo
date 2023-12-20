@@ -9,6 +9,4 @@ EXPOSE 4200
 
 RUN chown -R node /usr/src/app
 USER node
-CMD ["ng", "serve"]
-
-# ng serve --host=127.0.0.1
+CMD ["ng serve --host=127.0.0.1"]

@@ -63,12 +63,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "medilabo-frontend:build:development"
+          },
           "configurations": {
             "production": {
-              "buildTarget": "medilabo-frontend:build:production"
+              "browserTarget": "medilabo-frontend:build:production"
             },
             "development": {
-              "buildTarget": "medilabo-frontend:build:development"
+              "browserTarget": "medilabo-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
