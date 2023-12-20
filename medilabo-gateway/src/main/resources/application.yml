@@ -2,16 +2,8 @@ server:
   port: 9000
 
 spring:
-  main:
-    allow-bean-definition-overriding: true
   application:
     name: "gateway-service"
-  security:
-    basic:
-      enabled: true
-    user:
-      name: ${APP_U}
-      password: ${APP_PWD}
   cloud:
     gateway:
       globalcors:
@@ -23,15 +15,15 @@ spring:
         - id: patients-service
           uri: http://localhost:9001
           predicates:
-            - Path=/api/patients/**
+            - Path=/patients/**
         - id: notes-service
           uri: http://localhost:9002
           predicates:
-            - Path=/api/notes/**
+            - Path=/notes/**
         - id: assessments-service
           uri: http://localhost:9003
           predicates:
-            - Path=/api/assessments/**
+            - Path=/assessments/**
         - id: front-service
           uri: http://localhost:4200/
           predicates:

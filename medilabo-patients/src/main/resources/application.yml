@@ -11,14 +11,8 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     properties:
-        hibernate:
-          format_sql: false
-          dialect: org.hibernate.dialect.SQLServer2008Dialect
-          ddl-auto: update
-          show-sql: false
-  security:
-    basic:
-      enabled: true
-    user:
-      name: ${APP_U}
-      password: ${APP_PWD}
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.SQLServer2008Dialect
+        ddl-auto: update
+        show-sql: false
