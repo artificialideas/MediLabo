@@ -43,7 +43,7 @@ services:
     environment:
       - "SPRING_DATASOURCE_URL=jdbc:sqlserver://localhost:1433;encrypt=false;database=ML_Patients_OC"
       - "SPRING_DATASOURCE_USERNAME=OPC9"
-      - "SPRING_DATASOURCE_PASSWORD=${spring.datasource.password}"
+      - "SPRING_DATASOURCE_PASSWORD="
     depends_on:
       mssqldb:
         condition: service_started
