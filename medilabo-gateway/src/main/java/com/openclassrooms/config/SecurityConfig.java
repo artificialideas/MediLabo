@@ -12,11 +12,10 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .requestMatchers("/auth/**").permitAll() // Allow login endpoint
+        http.authorizeHttpRequests((authz) -> authz
                 .anyRequest().authenticated()
-                .and()
-                .httpBasic(Customizer.withDefaults());
+            )
+            .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }

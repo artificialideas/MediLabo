@@ -9,3 +9,9 @@ spring:
       host: localhost
       port: 27017
       database: ML_Notes_OC
+  security:
+    basic:
+      enabled: true
+    user:
+      name: ${APP_U}
+      password: ${APP_PWD}

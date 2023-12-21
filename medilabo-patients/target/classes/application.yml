@@ -16,3 +16,9 @@ spring:
           dialect: org.hibernate.dialect.SQLServer2008Dialect
           ddl-auto: update
           show-sql: false
+  security:
+    basic:
+      enabled: true
+    user:
+      name: ${APP_U}
+      password: ${APP_PWD}

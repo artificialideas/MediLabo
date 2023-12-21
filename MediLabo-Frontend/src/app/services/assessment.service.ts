@@ -8,7 +8,7 @@ import { AuthService } from "./auth.service";
     providedIn: 'root'
 })
 export class AssessmentService {
-    public gatewayUrl: string = "http://localhost:9000/assessments";
+    public gatewayUrl: string = "http://localhost:9000/api/assessments";
   
     constructor(
       private http: HttpClient,

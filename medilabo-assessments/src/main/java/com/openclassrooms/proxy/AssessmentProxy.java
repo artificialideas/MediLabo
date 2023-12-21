@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(value = "assessmentClient", url = "http://localhost:9000/")
+@FeignClient(name = "assessmentClient", url = "http://localhost:9000/")
 public interface AssessmentProxy {
     @RequestMapping(method = RequestMethod.GET, value = "patients/api-data/{id}")
     PatientResponse getDataFromServicePatients(

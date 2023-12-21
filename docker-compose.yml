@@ -9,7 +9,7 @@ services:
     environment:
       ACCEPT_EULA: Y
       MSSQL_DATABASE: ${MSSQL_DB}
-      MSSQL_USER : ${MSSQL_U}
+      MSSQL_USER: ${MSSQL_U}
       MSSQL_PASSWORD: ${MSSQL_PWD}
     healthcheck:
       test: [ "CMD", "curl", "-s", "http://localhost:1433" ]

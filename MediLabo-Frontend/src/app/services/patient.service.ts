@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class PatientService {
-  public gatewayUrl: string = "http://localhost:9000/patients";
+  public gatewayUrl: string = "http://localhost:9000/api/patients";
 
   constructor(
     private http: HttpClient,
