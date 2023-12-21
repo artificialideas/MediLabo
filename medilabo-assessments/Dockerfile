@@ -1,11 +1,14 @@
 #Source image with :
-FROM amazoncorretto:17
+FROM eclipse-temurin:17-jdk-jammy
+
+# Set the working directory in the container
+WORKDIR /app
 
 # Copy the jar from local machine into image to build
-COPY target/*.jar medilabo-assessments-1.0-SNAPSHOT.jar
+COPY target/medilabo-assessments-*.jar /medilabo-assessments-1.0-SNAPSHOT.jar
 
 #Port
 EXPOSE 9003
 
 # Define command to run java application
-ENTRYPOINT ["java", "-jar", "medilabo-assessments-1.0-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/medilabo-assessments-1.0-SNAPSHOT.jar"]

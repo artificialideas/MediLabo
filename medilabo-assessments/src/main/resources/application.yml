@@ -3,4 +3,8 @@ server:
 
 spring:
   application:
-    name: "assessments"
+    name: "assessments-service"
+
+logging:
+  level:
+    org.springframework.context.annotation.ClassPathBeanDefinitionScanner: DEBUG

@@ -1,14 +1,16 @@
-version: "3.2"
+version: "3.8"
+
 services:
   # Databases
   mssqldb:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server
     container_name: mssqldb
     restart: always
     environment:
-      - "MSSQL_DATABASE=ML_Patients_OC"
-      - "MSSQL_USER=OPC9"
-      - "MSSQL_PASSWORD=${spring.datasource.password}"
+      ACCEPT_EULA: Y
+      MSSQL_DATABASE: ${MSSQL_DB}
+      MSSQL_USER : ${MSSQL_U}
+      MSSQL_PASSWORD: ${MSSQL_PWD}
     volumes:
       - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     ports:
@@ -18,9 +20,7 @@ services:
     container_name: mongodb
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME:
-      MONGO_INITDB_ROOT_PASSWORD:
-      MONGO_INITDB_DATABASE: ML_Notes_OC
+      MONGO_INITDB_DATABASE: ${MG_DB}
     volumes:
       - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
@@ -30,23 +30,19 @@ services:
   medilabo-gateway:
     build:
       context: ./medilabo-gateway
+      dockerfile: Dockerfile
+    image: medilabo-gateway
     ports:
       - "9000:9000"
-    volumes:
-      - ./medilabo-gateway:/app
 
   medilabo-patients:
     build:
       context: ./medilabo-patients
-    image: medilabo-patient:latest
-    container_name: medilabo-patients
-    environment:
-      - "SPRING_DATASOURCE_URL=jdbc:sqlserver://localhost:1433;encrypt=false;database=ML_Patients_OC"
-      - "SPRING_DATASOURCE_USERNAME=OPC9"
-      - "SPRING_DATASOURCE_PASSWORD="
+      dockerfile: Dockerfile
+    image: medilabo-patient
     depends_on:
       mssqldb:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "9001:9001"
     restart: on-failure
@@ -54,15 +50,11 @@ services:
   medilabo-notes:
     build:
       context: ./medilabo-notes
-    image: medilabo-notes:latest
-    container_name: medilabo-notes
-    environment:
-      SPRING_DATA_MONGODB_HOST: mongodb
-      SPRING_DATA_MONGODB_PORT: 27017
-      SPRING_DATA_MONGODB_DATABASE: ML_Notes_OC
+      dockerfile: Dockerfile
+    image: medilabo-notes
     depends_on:
       mongodb:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "9002:9002"
     restart: on-failure
@@ -70,13 +62,13 @@ services:
   medilabo-assessments:
     build:
       context: ./medilabo-assessments
-    image: medilabo-assessments:latest
-    container_name: medilabo-assessments
+      dockerfile: Dockerfile
+    image: medilabo-assessments
     depends_on:
       medilabo-patients:
-        condition: service_started
+        condition: service_healthy
       medilabo-notes:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "9003:9003"
     restart: on-failure
@@ -84,17 +76,17 @@ services:
   medilabo-frontend:
     build:
       context: ./medilabo-frontend
-    image: medilabo-frontend:latest
-    container_name: medilabo-frontend
+      dockerfile: Dockerfile
+    image: medilabo-frontend
     depends_on:
       medilabo-patients:
-        condition: service_started
+        condition: service_healthy
       medilabo-notes:
-        condition: service_started
+        condition: service_healthy
       medilabo-gateway:
-        condition: service_started
+        condition: service_healthy
       medilabo-assessments:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "4200:4200"
     restart: on-failure
