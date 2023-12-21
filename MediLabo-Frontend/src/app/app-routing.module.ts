@@ -6,14 +6,15 @@ import { PatientDetailComponent } from './components/patient/patient-detail/pati
 import { PatientEditComponent } from './components/patient/patient-edit/patient-edit.component';
 import { PatientFormComponent } from './components/patient/patient-form/patient-form.component';
 import { Page404Component } from './components/patient/page-404/page-404.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  /* { path: '', 
-    redirectTo: 'patients', 
-    pathMatch: 'full' 
-  }, */
-  { 
-    path: '', 
+  { path: '',
+    component: LoginComponent,
+    title: 'MediLabo',
+  },
+  {
+    path: 'patients',
     component: PatientComponent,
     title: 'Patients list'
   },
