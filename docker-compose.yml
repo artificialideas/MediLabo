@@ -3,7 +3,7 @@ version: "3.8"
 services:
   # Databases
   mssqldb:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:latest
     container_name: mssqldb
     restart: always
     environment:
@@ -11,16 +11,27 @@ services:
       MSSQL_DATABASE: ${MSSQL_DB}
       MSSQL_USER : ${MSSQL_U}
       MSSQL_PASSWORD: ${MSSQL_PWD}
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "http://localhost:1433" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     volumes:
       - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     ports:
       - "1433:1433"
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MG_DB}
+    healthcheck:
+      test: [ "CMD", "curl", "-s", "http://localhost:27017" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
     volumes:
       - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
@@ -31,7 +42,7 @@ services:
     build:
       context: ./medilabo-gateway
       dockerfile: Dockerfile
-    image: medilabo-gateway
+    image: medilabo-gateway:latest
     ports:
       - "9000:9000"
 
