@@ -39,7 +39,8 @@ services:
     build:
       context: ./medilabo-patients
       dockerfile: Dockerfile
-    image: medilabo-patient
+    image: medilabo-patient:latest
+    container_name: medilabo-patients
     depends_on:
       mssqldb:
         condition: service_healthy
@@ -51,7 +52,8 @@ services:
     build:
       context: ./medilabo-notes
       dockerfile: Dockerfile
-    image: medilabo-notes
+    image: medilabo-notes:latest
+    container_name: medilabo-notes
     depends_on:
       mongodb:
         condition: service_healthy
@@ -63,7 +65,8 @@ services:
     build:
       context: ./medilabo-assessments
       dockerfile: Dockerfile
-    image: medilabo-assessments
+    image: medilabo-assessments:latest
+    container_name: medilabo-assessments
     depends_on:
       medilabo-patients:
         condition: service_healthy
@@ -77,7 +80,8 @@ services:
     build:
       context: ./medilabo-frontend
       dockerfile: Dockerfile
-    image: medilabo-frontend
+    image: medilabo-frontend:latest
+    container_name: medilabo-frontend
     depends_on:
       medilabo-patients:
         condition: service_healthy

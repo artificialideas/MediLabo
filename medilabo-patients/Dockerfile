@@ -1,14 +1,13 @@
-#Source image with :
-FROM openjdk:15
-
-# Set the working directory in the container
+### STAGE 1: Build ###
+FROM maven:3.6.3-openjdk-17 AS build
+RUN mkdir -p /app
 WORKDIR /app
+COPY pom.xml /app
+COPY src /app/src
+RUN mvn -f pom.xml clean package
 
-#Copy and add from source to the image filesystem
-COPY target/*.jar medilabo-patients.jar
-
-#Port
+### STAGE 2: Run ###
+FROM openjdk:15
+COPY --from=build /app/target/*.jar medilabo-patients.jar
 EXPOSE 9001
-
-# Define command to run java application
-ENTRYPOINT ["java", "-jar", "medilabo-patients.jar"]
+ENTRYPOINT ["java","-jar","medilabo-patients.jar"]
