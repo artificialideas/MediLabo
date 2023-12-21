@@ -5,11 +5,11 @@ WORKDIR /app
 #COPY ./medilabo-frontend/package*.json /app/
 COPY ["package.json", "package-lock.json", "./"]
 
-# Install Angular CLI and dependencies
-RUN npm install -g @angular/cli && npm install
+# Install dependencies
+RUN npm install --legacy-peer-deps
 
 # Copy the rest of the application code into the container
-COPY ./medilabo-frontend/ /app/
+COPY . ./app
 
 EXPOSE 4200
 
