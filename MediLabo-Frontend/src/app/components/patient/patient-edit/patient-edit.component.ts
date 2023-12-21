@@ -101,7 +101,7 @@ export class PatientEditComponent implements OnInit {
 
     public goToList() {
         this.router.navigate(
-            ['/']
+            ['/patients']
         );
     }
 }
