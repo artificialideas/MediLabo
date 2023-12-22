@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: "notes-service"
+  data:
+    mongodb:
+      host: ${SPRING_DATA_MONGODB_HOST}
+      port: ${SPRING_DATA_MONGODB_PORT}
+      database: ${SPRING_DATA_MONGODB_DATABASE}

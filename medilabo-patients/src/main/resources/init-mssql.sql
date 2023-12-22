@@ -1,10 +1,13 @@
 DROP DATABASE IF EXISTS ML_Patients_OC;
 CREATE DATABASE IF NOT EXISTS ML_Patients_OC;
+GO;
 
-Use [ML_Patients_OC]
+Use [ML_Patients_OC];
 GO;
 
 DROP TABLE IF EXISTS patients;
+GO;
+
 BEGIN
     CREATE TABLE IF NOT EXISTS patients (
         id_patient              UNIQUEIDENTIFIER DEFAULT NEWID() NOT NULL,
