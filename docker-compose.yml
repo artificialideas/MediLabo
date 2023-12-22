@@ -1,5 +1,9 @@
 version: "3.8"
 
+networks:
+  mssqlnetwork:
+    driver: bridge
+
 services:
   # Databases
   mssqldb:
@@ -8,12 +12,14 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: ${SA}
+      MSSQL_SA_PASSWORD: ${SA}
       MSSQL_DB: ${MSSQL_DB}
       MSSQL_USER: ${MSSQL_U}
       MSSQL_PASSWORD: ${MSSQL_PWD}
     ports:
       - "1433:1433"
+    networks:
+      - mssqlnetwork
 
   mongodb:
     image: mongo:latest
@@ -48,6 +54,8 @@ services:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://mssqldb:1433;encrypt=false;database=${MSSQL_DB}
       SPRING_DATASOURCE_USERNAME: ${MSSQL_U}
       SPRING_DATASOURCE_PASSWORD: ${MSSQL_PWD}
+    networks:
+      - mssqlnetwork
 
   medilabo-notes:
     depends_on:
