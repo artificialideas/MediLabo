@@ -97,7 +97,7 @@ services:
     container_name: medilabo-frontend
     ports:
       - "4200:4200"
-    restart: on-failure
+    restart: "no"
     environment:
       MEDILABO_GATEWAY_URL: http://medilabo-gateway:9000
 
