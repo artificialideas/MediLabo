@@ -85,6 +85,7 @@ export class PatientEditComponent implements OnInit {
                     .open(`${patient.firstName} ${patient.lastName} has been edited`, undefined, {
                         duration: 3000
                     });
+                this.goToList();
             });
         }
     }
@@ -101,7 +102,7 @@ export class PatientEditComponent implements OnInit {
 
     public goToList() {
         this.router.navigate(
-            ['/patients']
+            ['/']
         );
     }
 }

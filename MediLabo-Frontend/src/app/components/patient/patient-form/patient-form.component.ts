@@ -54,7 +54,7 @@ export class PatientFormComponent implements OnInit {
                     })
                     .afterOpened().subscribe(() => {
                             this.router.navigate(
-                            ['/patients']
+                            ['/']
                         );
                     });
             });
@@ -63,7 +63,7 @@ export class PatientFormComponent implements OnInit {
 
     public goToList() {
         this.router.navigate(
-            ['/patients']
+            ['/']
         );
     }
 }

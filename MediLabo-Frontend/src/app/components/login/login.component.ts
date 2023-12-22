@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
             if ((this.loginForm.get("username")?.value === environment.auth.user) && 
                     (this.loginForm.get("password")?.value) === environment.auth.pwd) {
                 this.router.navigate(
-                    ['/patients']
+                    ['/']
                 );
             } else {
                 this.loginError = true;
