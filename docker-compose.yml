@@ -8,7 +8,6 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: Y
-      MSSQL_PID: ${MSSQL_U}
       SA_PASSWORD: ${MSSQL_PWD}
     volumes:
       - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
