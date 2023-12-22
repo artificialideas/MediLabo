@@ -8,14 +8,8 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: Y
-      MSSQL_DATABASE: ${MSSQL_DB}
-      MSSQL_USER: ${MSSQL_U}
-      MSSQL_PASSWORD: ${MSSQL_PWD}
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "http://localhost:1433" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      MSSQL_PID: ${MSSQL_U}
+      SA_PASSWORD: ${MSSQL_PWD}
     volumes:
       - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     ports:
@@ -27,11 +21,6 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MG_DB}
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "http://localhost:27017" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     volumes:
       - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
@@ -47,62 +36,68 @@ services:
       - "9000:9000"
 
   medilabo-patients:
+    depends_on:
+      - mssqldb
     build:
       context: ./medilabo-patients
       dockerfile: Dockerfile
     image: medilabo-patient:latest
     container_name: medilabo-patients
-    depends_on:
-      mssqldb:
-        condition: service_healthy
     ports:
       - "9001:9001"
     restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssqldb:1433;encrypt=false;database=${MSSQL_DB}
+      SPRING_DATASOURCE_USERNAME: ${MSSQL_U}
+      SPRING_DATASOURCE_PASSWORD: ${MSSQL_PWD}
 
   medilabo-notes:
+    depends_on:
+      - mongodb
     build:
       context: ./medilabo-notes
       dockerfile: Dockerfile
     image: medilabo-notes:latest
     container_name: medilabo-notes
-    depends_on:
-      mongodb:
-        condition: service_healthy
     ports:
       - "9002:9002"
     restart: on-failure
+    environment:
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: ${MG_DB}
 
   medilabo-assessments:
+    depends_on:
+      - medilabo-gateway
+      - medilabo-patients
+      - medilabo-notes
     build:
       context: ./medilabo-assessments
       dockerfile: Dockerfile
     image: medilabo-assessments:latest
     container_name: medilabo-assessments
-    depends_on:
-      medilabo-patients:
-        condition: service_healthy
-      medilabo-notes:
-        condition: service_healthy
     ports:
       - "9003:9003"
     restart: on-failure
+    environment:
+      MEDILABO_PATIENTS_URL: http://medilabo-gateway:9000/medilabo-patients
+      MEDILABO_NOTES_URL: http://medilabo-gateway:9000/medilabo-notes
 
   medilabo-frontend:
+    depends_on:
+      - medilabo-gateway
+      - medilabo-patients
+      - medilabo-notes
+      - medilabo-assessments
     build:
       context: ./medilabo-frontend
       dockerfile: Dockerfile
     image: medilabo-frontend:latest
     container_name: medilabo-frontend
-    depends_on:
-      medilabo-patients:
-        condition: service_healthy
-      medilabo-notes:
-        condition: service_healthy
-      medilabo-gateway:
-        condition: service_healthy
-      medilabo-assessments:
-        condition: service_healthy
     ports:
       - "4200:4200"
     restart: on-failure
+    environment:
+      MEDILABO_GATEWAY_URL: http://medilabo-gateway:9000
 

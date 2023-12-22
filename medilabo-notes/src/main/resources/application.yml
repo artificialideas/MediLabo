@@ -4,8 +4,3 @@ server:
 spring:
   application:
     name: "notes-service"
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: ML_Notes_OC

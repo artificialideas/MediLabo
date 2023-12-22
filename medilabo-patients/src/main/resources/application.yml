@@ -4,15 +4,3 @@ server:
 spring:
   application:
     name: "patients-service"
-  datasource:
-    url: jdbc:sqlserver://localhost:1433;encrypt=false;database=ML_Patients_OC
-    username: OPC9
-    password: ${spring.datasource.password}
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-  jpa:
-    properties:
-      hibernate:
-        format_sql: false
-        dialect: org.hibernate.dialect.SQLServer2008Dialect
-        ddl-auto: update
-        show-sql: false
