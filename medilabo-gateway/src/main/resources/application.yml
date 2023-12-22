@@ -10,8 +10,8 @@ spring:
     basic:
       enabled: true
     user:
-      name: ${APP_U}
-      password: ${APP_PWD}
+      name: "admin"
+      password: "medilabo"
   cloud:
     gateway:
       globalcors:
