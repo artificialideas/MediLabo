@@ -5,6 +5,10 @@ GO;
 Use [ML_Patients_OC];
 GO;
 
+-- Create a login (if not exists)
+CREATE LOGIN IF NOT EXISTS OPC9 WITH PASSWORD='caga?tioavellanesItorrons1518', CHECK_POLICY=OFF;
+GO;
+
 DROP TABLE IF EXISTS patients;
 GO;
 

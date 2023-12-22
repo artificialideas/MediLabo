@@ -8,9 +8,10 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: ${MSSQL_PWD}
-    volumes:
-      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
+      SA_PASSWORD: ${SA}
+      MSSQL_DB: ${MSSQL_DB}
+      MSSQL_USER: ${MSSQL_U}
+      MSSQL_PASSWORD: ${MSSQL_PWD}
     ports:
       - "1433:1433"
 
@@ -20,8 +21,6 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MG_DB}
-    volumes:
-      - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - "27018:27017"
 
