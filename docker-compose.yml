@@ -79,6 +79,8 @@ services:
     ports:
       - "9000:9000"
     restart: on-failure
+    environment:
+      MEDILABO_FRONTEND_URL: http://medilabo-frontend:4200
 
   medilabo-assessments:
     depends_on:

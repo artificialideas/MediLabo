@@ -13,18 +13,18 @@ spring:
           allowedHeaders: "*"
       routes:
         - id: patients-service
-          uri: http://localhost:9001
+          uri: http://medilabo-patients:9001
           predicates:
             - Path=/patients/**
         - id: notes-service
-          uri: http://localhost:9002
+          uri: http://medilabo-notes:9002
           predicates:
             - Path=/notes/**
         - id: assessments-service
-          uri: http://localhost:9003
+          uri: http://medilabo-assessments:9003
           predicates:
             - Path=/assessments/**
         - id: front-service
-          uri: http://localhost:4200/
+          uri: http://medilabo-frontend:4200/
           predicates:
             - Path=/**
