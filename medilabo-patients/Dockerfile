@@ -1,4 +1,4 @@
-### STAGE 1: Build ###
+# STAGE 1: Build JAR
 FROM maven:3.6.3-openjdk-17 AS build
 RUN mkdir -p /app
 WORKDIR /app
@@ -6,15 +6,15 @@ COPY pom.xml /app
 COPY src /app/src
 RUN mvn -f pom.xml clean package
 
-#MSSQL INIT
+# STAGE 2: Initialize MSSQL Database
 FROM mcr.microsoft.com/mssql/server:latest
-# Create a directory to hold initialization scripts
 RUN mkdir -p /docker-entrypoint-initdb.d
-# CMD specifies the command to run when the container starts
+COPY --from=build /app/target/*.jar /app/medilabo-patients.jar
+COPY init-mssql.sql /docker-entrypoint-initdb.d/init-mssql.sql
 CMD ["bash", "-c", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P $SA_PASSWORD -d $MSSQL_DB -i /docker-entrypoint-initdb.d/init-mssql.sql"]
 
-### STAGE 2: Run ###
+# STAGE 3: Run the Spring Boot Application
 FROM openjdk:15
-COPY --from=build /app/target/*.jar medilabo-patients.jar
+COPY --from=build /app/target/*.jar /app/medilabo-patients.jar
 EXPOSE 9001
-ENTRYPOINT ["java","-jar","medilabo-patients.jar"]
+ENTRYPOINT ["java","-jar","/app/medilabo-patients.jar"]

@@ -1,9 +1,5 @@
 version: "3.8"
 
-networks:
-  mssqlnetwork:
-    driver: bridge
-
 services:
   # Databases
   mssqldb:
@@ -11,15 +7,19 @@ services:
     container_name: mssqldb
     restart: always
     environment:
+      SA_PASSWORD: ${SA}
       ACCEPT_EULA: Y
-      MSSQL_SA_PASSWORD: ${SA}
+      MSSQL_PID: developer
       MSSQL_DB: ${MSSQL_DB}
       MSSQL_USER: ${MSSQL_U}
       MSSQL_PASSWORD: ${MSSQL_PWD}
     ports:
       - "1433:1433"
-    networks:
-      - mssqlnetwork
+    healthcheck:
+      test: [ "CMD-SHELL", "[ -f /var/opt/mssql/data/master.mdf ]" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   mongodb:
     image: mongo:latest
@@ -45,7 +45,7 @@ services:
     build:
       context: ./medilabo-patients
       dockerfile: Dockerfile
-    image: medilabo-patient:latest
+    image: medilabo-patients:latest
     container_name: medilabo-patients
     ports:
       - "9001:9001"
@@ -54,8 +54,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://mssqldb:1433;encrypt=false;database=${MSSQL_DB}
       SPRING_DATASOURCE_USERNAME: ${MSSQL_U}
       SPRING_DATASOURCE_PASSWORD: ${MSSQL_PWD}
-    networks:
-      - mssqlnetwork
 
   medilabo-notes:
     depends_on:

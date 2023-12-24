@@ -1,12 +1,30 @@
-DROP DATABASE IF EXISTS ML_Patients_OC;
-CREATE DATABASE IF NOT EXISTS ML_Patients_OC;
-GO;
+-- init-mssql.sql
+USE master;
+GO
 
-Use [ML_Patients_OC];
-GO;
+-- Create database
+CREATE DATABASE ${MSSQL_DB};
+GO
 
-DROP TABLE IF EXISTS patients;
-GO;
+USE ${MSSQL_DB};
+GO
+
+-- Retry mechanism with delay
+:retry
+WAITFOR DELAY '00:00:10'; -- Wait for 10 seconds
+IF (DB_ID('${MSSQL_DB}') IS NULL)
+    GOTO retry;
+
+-- Create a dedicated user for medilabo-patients using environment variables
+DECLARE @appUserLogin NVARCHAR(100) = '$(MSSQL_USER)';
+DECLARE @appUserPassword NVARCHAR(100) = '$(MSSQL_PASSWORD)';
+
+CREATE LOGIN @appUserLogin WITH PASSWORD = @appUserPassword;
+CREATE USER @appUserLogin FOR LOGIN @appUserLogin;
+
+-- Grant necessary permissions
+GRANT CONNECT SQL TO @appUserLogin;
+GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo TO @appUserLogin;
 
 BEGIN
     CREATE TABLE IF NOT EXISTS patients (
@@ -26,4 +44,4 @@ BEGIN
     INSERT [dbo].[patients] ([id_patient], [first_name], [last_name], [birthdate], [gender], [address], [phone_number]) VALUES ('83fc61fd-7143-44a8-9445-e0329e50a1eb', 'Test', 'TestInDanger', '2004-06-18', 'M', '3 Club Road', '300-444-5555');
     INSERT [dbo].[patients] ([id_patient], [first_name], [last_name], [birthdate], [gender], [address], [phone_number]) VALUES ('fc75ee91-3e8e-4de9-b4e2-f39556cd1dd2', 'Test', 'TestEarlyOnset', '2002-06-2', 'M', '4 Valley Dr', '400-555-6666');
 END
-GO;
+GO
