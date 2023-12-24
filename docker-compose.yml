@@ -11,12 +11,14 @@ services:
       ACCEPT_EULA: Y
       MSSQL_PID: developer
       MSSQL_DB: ${MSSQL_DB}
-    volumes:
-      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
+      MSSQL_USER: ${MSSQL_U}
+      MSSQL_PASSWORD: ${MSSQL_PWD}
     ports:
       - "1433:1433"
+    volumes:
+      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     healthcheck:
-      test: [ "CMD-SHELL", "[ -f /var/opt/mssql/data/master.mdf ]" ]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA} -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -77,9 +79,6 @@ services:
     ports:
       - "9000:9000"
     restart: on-failure
-    environment:
-      MEDILABO_PATIENTS_URL: http://medilabo-patients:9001
-      MEDILABO_NOTES_URL: http://medilabo-notes:9002
 
   medilabo-assessments:
     depends_on:
@@ -114,4 +113,3 @@ services:
     restart: "no"
     environment:
       MEDILABO_GATEWAY_URL: http://medilabo-gateway:9000
-
