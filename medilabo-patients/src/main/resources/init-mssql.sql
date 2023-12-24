@@ -16,8 +16,8 @@ IF (DB_ID('${MSSQL_DB}') IS NULL)
     GOTO retry;
 
 -- Create a dedicated user for medilabo-patients using environment variables
-DECLARE @appUserLogin NVARCHAR(100) = '$(MSSQL_USER)';
-DECLARE @appUserPassword NVARCHAR(100) = '$(MSSQL_PASSWORD)';
+DECLARE @appUserLogin NVARCHAR(100) = '$(SPRING_DATASOURCE_USERNAME)';
+DECLARE @appUserPassword NVARCHAR(100) = '$(SPRING_DATASOURCE_PASSWORD)';
 
 CREATE LOGIN @appUserLogin WITH PASSWORD = @appUserPassword;
 CREATE USER @appUserLogin FOR LOGIN @appUserLogin;

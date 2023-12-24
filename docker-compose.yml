@@ -11,8 +11,8 @@ services:
       ACCEPT_EULA: Y
       MSSQL_PID: developer
       MSSQL_DB: ${MSSQL_DB}
-      MSSQL_USER: ${MSSQL_U}
-      MSSQL_PASSWORD: ${MSSQL_PWD}
+    volumes:
+      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     ports:
       - "1433:1433"
     healthcheck:
@@ -27,18 +27,12 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MG_DB}
+    volumes:
+      - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - "27018:27017"
 
   # Services
-  medilabo-gateway:
-    build:
-      context: ./medilabo-gateway
-      dockerfile: Dockerfile
-    image: medilabo-gateway:latest
-    ports:
-      - "9000:9000"
-
   medilabo-patients:
     depends_on:
       - mssqldb
@@ -70,6 +64,22 @@ services:
       SPRING_DATA_MONGODB_HOST: mongodb
       SPRING_DATA_MONGODB_PORT: 27017
       SPRING_DATA_MONGODB_DATABASE: ${MG_DB}
+
+  medilabo-gateway:
+    depends_on:
+      - medilabo-patients
+      - medilabo-notes
+    build:
+      context: ./medilabo-gateway
+      dockerfile: Dockerfile
+    image: medilabo-gateway:latest
+    container_name: medilabo-gateway
+    ports:
+      - "9000:9000"
+    restart: on-failure
+    environment:
+      MEDILABO_PATIENTS_URL: http://medilabo-patients:9001
+      MEDILABO_NOTES_URL: http://medilabo-notes:9002
 
   medilabo-assessments:
     depends_on:
