@@ -39,7 +39,7 @@ With Docker mounting VM and containers, applications can be installed reducing t
 * Use of environment variables for sensitive information.
 
 ### Database Initialization:
-* For MSSQL, creation of an initialization SQL script to set up the database schema and initial data.
+* Creation of initialization SQL scripts to set up the database schema and initial data.
 * In Docker Compose, mount of the initialization script to `/docker-entrypoint-initdb.d/` for automatic execution during container startup.
 
 ### Docker Compose File & Container Configuration:
