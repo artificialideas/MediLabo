@@ -22,11 +22,17 @@ Medilabo uses Docker. To make it run, please follow this steps:
 The entrypoint URL for Medilabo app is: http://localhost:9000
 
 ## Green code:
+"Green coding is an environmentally sustainable computing practice that seeks to minimize the energy involved in processing lines of code and, in turn, help organizations reduce overall energy consumption." (_IBM_)
+
 Some green strategies used for Medilabo application:
 
-### Docker Compose File:
-* Use of environment variables in the docker-compose.yml file for sensitive information like database credentials and configurations.
-* Separation of an .env file to store environment variables.
+### Application structure:
+#### Microservices:
+Microservices let developers build applications that break down complicated software into smaller elements that will be called when needded.
+#### Cloud-based:
+By using a cloud infrastructure, developers can cut the amount of data sent, reducing resources and energy.
+#### Virtual machines:
+With Docker mounting VM and containers, applications can be installed reducing the number of servers needed for them to run.
 
 ### Spring Boot Application Configuration:
 * Externalization of the application configuration using application.yml files.
@@ -36,10 +42,12 @@ Some green strategies used for Medilabo application:
 * For MSSQL, creation of an initialization SQL script to set up the database schema and initial data.
 * In Docker Compose, mount of the initialization script to `/docker-entrypoint-initdb.d/` for automatic execution during container startup.
 
-### Docker Container Configuration:
+### Docker Compose File & Container Configuration:
+* Use of environment variables in the docker-compose.yml file for sensitive information like database credentials and configurations.
+* Separation of an .env file to store environment variables.
 * Set up Docker containers for each microservice and multi-stage Docker builds for efficient image creation.
 * Limit user privileges to the minimum required for application functionality.
 
-### Security Best Practices:
-* Avoid hardcoding sensitive information in configuration files.
-* Securely manage credentials, especially database usernames and passwords.
+### Improvements:
+* Add shared service for shared Data Transfer Objects, functionalities.
+* Improve docker compose industrialization with the inclusion of init_database.sh in general build.
