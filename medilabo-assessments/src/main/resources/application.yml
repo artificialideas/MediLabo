@@ -4,12 +4,6 @@ server:
 spring:
   application:
     name: "assessments-service"
-  security:
-    basic:
-      enabled: true
-    user:
-      name: "admin"
-      password: "medilabo"
 
 logging:
   level:
