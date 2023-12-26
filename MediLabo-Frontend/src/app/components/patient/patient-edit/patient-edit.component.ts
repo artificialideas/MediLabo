@@ -81,10 +81,13 @@ export class PatientEditComponent implements OnInit {
             };
             
             this.patientService.update(patient.firstName, patient.lastName, patient).subscribe((res) => {
-                this.snackbar
-                    .open(`${patient.firstName} ${patient.lastName} has been edited`, undefined, {
-                        duration: 3000
-                    });
+                if (res) {
+                    this.snackbar
+                        .open(`${patient.firstName} ${patient.lastName} has been edited`, undefined, {
+                            duration: 3000
+                        });
+                }
+                //this.goToList();
             });
         }
     }
@@ -101,7 +104,7 @@ export class PatientEditComponent implements OnInit {
 
     public goToList() {
         this.router.navigate(
-            ['/patients']
+            ['/']
         );
     }
 }

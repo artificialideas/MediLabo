@@ -29,4 +29,7 @@ export class NoteDialogComponent implements OnInit {
             this.dialogRef.close(this.newNoteForm.value);
         }
     }
+    closeDialog() {
+        this.dialogRef.close();
+    }
 }

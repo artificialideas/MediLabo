@@ -13,11 +13,11 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button mat-dialog-close
+    <a mat-button mat-dialog-close
             class="btn btn-light mr-3"
-            type="button">
+            (click)="closeDialog()">
         Cancel
-    </button>
+    </a>
     <button mat-button
             class="btn btn-primary"
             (click)="processRegister()"

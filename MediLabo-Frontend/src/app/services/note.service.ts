@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class NoteService {
-  public gatewayUrl: string = "http://localhost:9000/api/notes";
+  public gatewayUrl: string = "http://localhost:9000/notes";
 
   constructor(
     private http: HttpClient,

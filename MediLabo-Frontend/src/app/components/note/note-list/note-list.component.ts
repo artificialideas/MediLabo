@@ -58,24 +58,27 @@ export class NoteListComponent implements OnInit {
                 patient: this.patient
             }
         });
-        
+    
         dialogRef.afterClosed().pipe(
-            filter((result: Note) => result !== null && this.patient !== undefined),
-            map((result: Note) => ({
-                patId: this.patient?.id,
-                patient: `${this.patient?.firstName} ${this.patient?.lastName}`,
-                note: result.note
-              })),
-            concatMap((newNote: Note) => this.noteService.add(newNote)),
-            tap(() => this.showSnackbar()),
-            switchMap(() => {
-                this.loadNotes(); // Use the loadNotes function
-                this.addedNote.emit(true); // Alert parent of new added note so patient's risk can be reevaluated
-
-                return EMPTY; // Return an observable to satisfy the pipe
+            filter(result => result !== undefined), // Exclude undefined results
+            switchMap((result: Note) => {
+                const newNote: Note = {
+                    patId: this.patient?.id,
+                    patient: `${this.patient?.firstName} ${this.patient?.lastName}`,
+                    note: result.note
+                };
+    
+                return this.noteService.add(newNote).pipe(
+                    tap(() => this.showSnackbar()),
+                    switchMap(() => {
+                        this.loadNotes();
+                        this.addedNote.emit(true);
+                        return EMPTY;
+                    })
+                );
             })
         ).subscribe();
-    }
+    }    
 
     private showSnackbar(): void {
         this.snackbar.open(`A new note has been added for ${this.patient?.firstName} ${this.patient?.lastName}.`, undefined, {

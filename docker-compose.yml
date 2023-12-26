@@ -7,19 +7,21 @@ services:
     container_name: mssqldb
     restart: always
     environment:
+      SA_PASSWORD: ${SA}
       ACCEPT_EULA: Y
-      MSSQL_DATABASE: ${MSSQL_DB}
+      MSSQL_PID: developer
+      MSSQL_DB: ${MSSQL_DB}
       MSSQL_USER: ${MSSQL_U}
       MSSQL_PASSWORD: ${MSSQL_PWD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
     healthcheck:
-      test: [ "CMD", "curl", "-s", "http://localhost:1433" ]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA} -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 3
-    volumes:
-      - ./medilabo-patients/src/main/resources/init-mssql.sql:/docker-entrypoint-initdb.d/init-mssql.sql
-    ports:
-      - "1433:1433"
 
   mongodb:
     image: mongo:latest
@@ -27,82 +29,89 @@ services:
     restart: always
     environment:
       MONGO_INITDB_DATABASE: ${MG_DB}
-    healthcheck:
-      test: [ "CMD", "curl", "-s", "http://localhost:27017" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
     volumes:
       - ./medilabo-notes/src/main/resources/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     ports:
       - "27018:27017"
 
   # Services
-  medilabo-gateway:
-    build:
-      context: ./medilabo-gateway
-      dockerfile: Dockerfile
-    image: medilabo-gateway:latest
-    ports:
-      - "9000:9000"
-
   medilabo-patients:
+    depends_on:
+      - mssqldb
     build:
       context: ./medilabo-patients
       dockerfile: Dockerfile
-    image: medilabo-patient:latest
+    image: medilabo-patients:latest
     container_name: medilabo-patients
-    depends_on:
-      mssqldb:
-        condition: service_healthy
     ports:
       - "9001:9001"
     restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssqldb:1433;encrypt=false;database=${MSSQL_DB}
+      SPRING_DATASOURCE_USERNAME: ${MSSQL_U}
+      SPRING_DATASOURCE_PASSWORD: ${MSSQL_PWD}
 
   medilabo-notes:
+    depends_on:
+      - mongodb
     build:
       context: ./medilabo-notes
       dockerfile: Dockerfile
     image: medilabo-notes:latest
     container_name: medilabo-notes
-    depends_on:
-      mongodb:
-        condition: service_healthy
     ports:
       - "9002:9002"
     restart: on-failure
+    environment:
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: ${MG_DB}
+
+  medilabo-gateway:
+    depends_on:
+      - medilabo-patients
+      - medilabo-notes
+    build:
+      context: ./medilabo-gateway
+      dockerfile: Dockerfile
+    image: medilabo-gateway:latest
+    container_name: medilabo-gateway
+    ports:
+      - "9000:9000"
+    restart: on-failure
+    environment:
+      MEDILABO_FRONTEND_URL: http://medilabo-frontend:4200
 
   medilabo-assessments:
+    depends_on:
+      - medilabo-gateway
+      - medilabo-patients
+      - medilabo-notes
     build:
       context: ./medilabo-assessments
       dockerfile: Dockerfile
     image: medilabo-assessments:latest
     container_name: medilabo-assessments
-    depends_on:
-      medilabo-patients:
-        condition: service_healthy
-      medilabo-notes:
-        condition: service_healthy
     ports:
       - "9003:9003"
     restart: on-failure
+    environment:
+      MEDILABO_PATIENTS_URL: http://medilabo-gateway:9000/medilabo-patients
+      MEDILABO_NOTES_URL: http://medilabo-gateway:9000/medilabo-notes
 
   medilabo-frontend:
+    depends_on:
+      - medilabo-gateway
+      - medilabo-patients
+      - medilabo-notes
+      - medilabo-assessments
     build:
       context: ./medilabo-frontend
       dockerfile: Dockerfile
     image: medilabo-frontend:latest
     container_name: medilabo-frontend
-    depends_on:
-      medilabo-patients:
-        condition: service_healthy
-      medilabo-notes:
-        condition: service_healthy
-      medilabo-gateway:
-        condition: service_healthy
-      medilabo-assessments:
-        condition: service_healthy
     ports:
       - "4200:4200"
-    restart: on-failure
-
+    restart: "no"
+    environment:
+      MEDILABO_GATEWAY_URL: http://medilabo-gateway:9000

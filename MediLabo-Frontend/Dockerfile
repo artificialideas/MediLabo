@@ -9,9 +9,12 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN npm install --legacy-peer-deps
 
 # Copy the rest of the application code into the container
-COPY . ./app
+COPY . .
+
+# Install Angular CLI globally
+RUN npm install -g @angular/cli@16.0.0
 
 EXPOSE 4200
 
 # Run the application when the container starts
-CMD ["ng", "serve", "--host", "127.0.0.1"]
+CMD ["ng", "serve", "--host", "0.0.0.0"]

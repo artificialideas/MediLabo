@@ -6,9 +6,9 @@ spring:
     name: "notes-service"
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: ML_Notes_OC
+      host: ${SPRING_DATA_MONGODB_HOST}
+      port: ${SPRING_DATA_MONGODB_PORT}
+      database: ${SPRING_DATA_MONGODB_DATABASE}
   security:
     basic:
       enabled: true
