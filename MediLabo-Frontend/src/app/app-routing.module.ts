@@ -9,13 +9,12 @@ import { Page404Component } from './components/patient/page-404/page-404.compone
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: 'login',
+  /* { path: '',
     component: LoginComponent,
     title: 'MediLabo',
-  },
-  { path: '', pathMatch: 'full', redirectTo: 'patients'},
+  }, */
   {
-    path: 'patients',
+    path: '',
     component: PatientComponent,
     title: 'Patients list'
   },
