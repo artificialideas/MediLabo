@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environment/environment';
  
 @Component({
@@ -17,8 +15,7 @@ export class LoginComponent implements OnInit {
  
     constructor (
         private fb: FormBuilder,
-        private router: Router,
-        private authService: AuthService
+        private router: Router
     ) {}
  
     ngOnInit() {
@@ -26,45 +23,31 @@ export class LoginComponent implements OnInit {
             username: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required)
         });
+
+        if (sessionStorage.getItem('medilaboData')) {
+            sessionStorage.removeItem('medilaboData');
+        }
     }
  
     public onFormSubmit() {
-        this.authService.login({ 
-            username: this.loginForm.get("username")?.value,
-            password: this.loginForm.get("password")?.value
-        }).subscribe(() => {
-                this.router.navigate(['/patients']);
-            },
-            (error: string) => {
-                this.loginErrorMessage = "error :  Username or password is incorrect";
+        if (this.loginForm.valid) {
+            if ((this.loginForm.get("username")?.value === environment.auth.user) && 
+                    (this.loginForm.get("password")?.value) === environment.auth.pwd) {
+                const token = btoa(this.loginForm.get("username")?.value + ':' + this.loginForm.get("password")?.value);
+                const userData = {
+                    userName: this.loginForm.get("username")?.value,
+                    authData: token
+                };
+    
+                sessionStorage.setItem('medilaboData', JSON.stringify(userData));
+
+                this.router.navigate(
+                    ['/']
+                );
+            } else {
+                this.loginError = true;
+                this.loginErrorMessage = "Unauthorized access."
             }
-        )
-        /* if (this.loginForm.valid) {
-            this.authService.getAccess({ 
-                username: this.loginForm.get("username")?.value,
-                password: this.loginForm.get("password")?.value
-            }).subscribe(
-                (response: any) => {
-                    if (response) {
-                        const token = this.authService.createCredentials(this.loginForm.get("username")?.value, this.loginForm.get("password")?.value);
-                        const userData = {
-                            userName: this.loginForm.get("username")?.value,
-                            authData: token
-                        };
-            
-                        sessionStorage.setItem('userData', JSON.stringify(userData));
-                        //this.http.defaults.headers.common['Authorization'] = 'Basic ' + token;
-                        this.router.navigate(['/']);
-                    } else {
-                        this.loginError = true;
-                        this.loginErrorMessage = "Unauthorized access."
-                    }
-                },
-                (error: string) => {
-                    this.loginError = true;
-                    this.loginErrorMessage = 'Error during login:' + error;
-                }
-            );
-        } */
+        }
     }
 } 
