@@ -1,4 +1,11 @@
 <h2>All patients</h2>
+<p class="mb-4"><button mat-raised-button
+      color="primary"
+      (click)="authService.logout()"
+      title="Logout">
+    Logout
+  </button>
+</p>
 
 <table class="table table-striped" *ngIf="patients.length > 0">
   <caption hidden>All patients list</caption>

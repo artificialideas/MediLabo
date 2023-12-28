@@ -16,7 +16,7 @@ Medilabo uses Docker. To make it run, please follow this steps:
 3. Open a console and navigate until you are in _/Medilabo_ folder.
 4. Build all images with: `docker-compose build`
 5. **First** you must run the MicrosoftSQL server container: `docker-compose up mssqldb`
-6. **Second**, open your Docker CLI and type the command in _/medilabo-patients/src/main/resources/init_database.sh_
+6. **Second**, open your _Docker > Containers > mssqldb > CLI_ and type the command in _/medilabo-patients/src/main/resources/init_database.sh_
 7. **Third**, run all the remaining images with: `docker-compose up -d`
 
 The entrypoint URL for Medilabo app is: http://localhost:9000

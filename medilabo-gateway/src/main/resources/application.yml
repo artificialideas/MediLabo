@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: "gateway-service"
+#  main:
+#    allow-bean-definition-overriding: true
+#  security:
+#    user:
+#      username: "admin"
+#      password: "medilabo"
   cloud:
     gateway:
       globalcors:
@@ -13,18 +19,18 @@ spring:
           allowedHeaders: "*"
       routes:
         - id: patients-service
-          uri: http://medilabo-patients:9001
+          uri: http://localhost:9001
           predicates:
             - Path=/patients/**
         - id: notes-service
-          uri: http://medilabo-notes:9002
+          uri: http://localhost:9002
           predicates:
             - Path=/notes/**
         - id: assessments-service
-          uri: http://medilabo-assessments:9003
+          uri: http://localhost:9003
           predicates:
             - Path=/assessments/**
         - id: front-service
-          uri: http://medilabo-frontend:4200/
+          uri: http://localhost:4200/
           predicates:
             - Path=/**
