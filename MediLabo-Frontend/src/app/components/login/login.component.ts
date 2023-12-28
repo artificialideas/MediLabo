@@ -29,7 +29,17 @@ export class LoginComponent implements OnInit {
     }
  
     public onFormSubmit() {
-        if (this.loginForm.valid) {
+        this.authService.login({ 
+            username: this.loginForm.get("username")?.value,
+            password: this.loginForm.get("password")?.value
+        }).subscribe(() => {
+                this.router.navigate(['/patients']);
+            },
+            (error: string) => {
+                this.loginErrorMessage = "error :  Username or password is incorrect";
+            }
+        )
+        /* if (this.loginForm.valid) {
             this.authService.getAccess({ 
                 username: this.loginForm.get("username")?.value,
                 password: this.loginForm.get("password")?.value
@@ -55,6 +65,6 @@ export class LoginComponent implements OnInit {
                     this.loginErrorMessage = 'Error during login:' + error;
                 }
             );
-        }
+        } */
     }
 } 
