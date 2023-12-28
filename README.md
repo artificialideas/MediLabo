@@ -4,8 +4,8 @@ Medilabo is a medical application that allows the listing of patients with an an
 ## Specifications
 This application has a microservice structure with Java and Typescript as core technologies.
 * Medilabo-Patients: Java 15; Spring Boot 2.7.5; MicrosoftSQL Server
-* Medilabo-Notes: Java 17; Spring Boot 3.2.0-SNAPSHOT; MongoDB
-* Medilabo-Assessments: Java 17; Spring Boot 3.2.0-SNAPSHOT
+* Medilabo-Notes: Java 17; Spring Boot 2.7.5; MongoDB
+* Medilabo-Assessments: Java 17; Spring Boot 2.7.5
 * Medilabo-Gateway: Java 17; Spring Boot 2.7.17
 * Medilabo-Frontend: Angular 16; Node 18
 
