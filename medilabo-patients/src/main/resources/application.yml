@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: "patients-service"
+  security:
+    basic:
+      enabled: true
+    user:
+      name: "admin"
+      password: "medilabo"
   datasource:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
