@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from 'src/environment/environment';
+import { AuthService } from 'src/app/services/auth.service';
  
 @Component({
     selector: 'app-login',
@@ -15,7 +16,9 @@ export class LoginComponent implements OnInit {
  
     constructor (
         private fb: FormBuilder,
-        private router: Router
+        private http: HttpClient,
+        private router: Router,
+        private authService: AuthService
     ) {}
  
     ngOnInit() {
@@ -27,15 +30,31 @@ export class LoginComponent implements OnInit {
  
     public onFormSubmit() {
         if (this.loginForm.valid) {
-            if ((this.loginForm.get("username")?.value === environment.auth.user) && 
-                    (this.loginForm.get("password")?.value) === environment.auth.pwd) {
-                this.router.navigate(
-                    ['/']
-                );
-            } else {
-                this.loginError = true;
-                this.loginErrorMessage = "Unauthorized access."
-            }
+            const body = {
+                username: this.loginForm.get("username")?.value,
+                password: this.loginForm.get("password")?.value
+            };
+            this.http.post<boolean>("http://localhost:9000/authenticate", body, {observe: 'response'}). subscribe((res) => {
+                if (res) {
+                    this.authService.username = this.loginForm.get("username")?.value.trim();
+                    this.authService.password = this.loginForm.get("password")?.value;
+
+                    // const token = btoa(this.loginForm.get("username")?.value + ':' + this.loginForm.get("password")?.value);
+                    // const userData = {
+                    //     userName: this.loginForm.get("username")?.value,
+                    //     authData: token
+                    // };
+        
+                    // sessionStorage.setItem('medilaboData', JSON.stringify(userData));
+
+                    this.router.navigate(
+                        ['/patients']
+                    );
+                } else {
+                    this.loginError = true;
+                    this.loginErrorMessage = "Unauthorized access."
+                }
+            });
         }
     }
 } 

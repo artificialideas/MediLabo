@@ -7,6 +7,7 @@ import { concatMap, of } from 'rxjs';
 
 import { FullPatient, Patient } from 'src/app/models/patient.model';
 import { AssessmentService } from 'src/app/services/assessment.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class PatientEditComponent implements OnInit {
         private fb: FormBuilder,
         private snackbar: MatSnackBar,
         private patientService: PatientService,
-        private assessmentService: AssessmentService
+        private assessmentService: AssessmentService,
+        public authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -104,7 +106,7 @@ export class PatientEditComponent implements OnInit {
 
     public goToList() {
         this.router.navigate(
-            ['/']
+            ['/patients']
         );
     }
 }

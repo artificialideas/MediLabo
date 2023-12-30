@@ -94,7 +94,7 @@ services:
     container_name: medilabo-assessments
     ports:
       - "9003:9003"
-    restart: on-failure
+    restart: "no"
     environment:
       MEDILABO_PATIENTS_URL: http://medilabo-gateway:9000/medilabo-patients
       MEDILABO_NOTES_URL: http://medilabo-gateway:9000/medilabo-notes

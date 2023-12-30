@@ -4,6 +4,12 @@ server:
 spring:
   application:
     name: "notes-service"
+  security:
+    basic:
+      enabled: true
+    user:
+      name: "admin"
+      password: "medilabo"
   data:
     mongodb:
       host: ${SPRING_DATA_MONGODB_HOST}
