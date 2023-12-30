@@ -4,12 +4,6 @@ server:
 spring:
   application:
     name: "gateway-service"
-#  main:
-#    allow-bean-definition-overriding: true
-#  security:
-#    user:
-#      username: "admin"
-#      password: "medilabo"
   cloud:
     gateway:
       globalcors:
